@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.SimpleAuto;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.MotorShifter;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -25,6 +26,7 @@ import frc.robot.subsystems.DriveTrain;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveTrain m_drivetrain = new DriveTrain();
+  private final MotorShifter m_shifter = new MotorShifter();
 
   private final SimpleAuto m_autoCommand = new SimpleAuto();
 
@@ -39,11 +41,18 @@ public class RobotContainer {
 
     // Configure default commands
     // Set the default drive command to split-stick arcade drive
+  /*
     m_drivetrain.setDefaultCommand(
         new RunCommand(() -> m_drivetrain.arcadeDrive(
             m_driverController.getX(Hand.kLeft),
-            m_driverController.getY(Hand.kRight))));
-            
+            m_driverController.getY(Hand.kRight)),m_drivetrain));
+    */        
+    m_drivetrain.setDefaultCommand(new RunCommand(() -> m_drivetrain.curvatureDrive(
+      m_driverController.getRawAxis(3) - m_driverController.getRawAxis(2), 
+      m_driverController.getRawAxis(0), 
+      m_driverController.getRawButton(2)), m_drivetrain));
+      
+      
   }
 
   /**

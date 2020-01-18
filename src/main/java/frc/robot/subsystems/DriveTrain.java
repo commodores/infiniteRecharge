@@ -77,6 +77,8 @@ public class DriveTrain extends SubsystemBase {
   rightSlave0.setNeutralMode(NeutralMode.Brake);
   rightSlave1.setNeutralMode(NeutralMode.Brake);
 
+  m_drive.setSafetyEnabled(false);
+
   }
 
   /**
@@ -87,6 +89,10 @@ public class DriveTrain extends SubsystemBase {
    */
   public void arcadeDrive(double fwd, double rot) {
     m_drive.arcadeDrive(fwd, rot);
+  }
+
+  public void curvatureDrive(double speed, double rotation, boolean quickturn){
+    m_drive.curvatureDrive(speed, rotation, quickturn);
   }
 
   /**
