@@ -144,6 +144,11 @@ public class DriveTrain extends SubsystemBase {
     pigeon.getYawPitchRoll(ypr);
     return ypr[0];
   }
+
+  public void zeroHeading() {
+		pigeon.setYaw(0, 30);
+		pigeon.setAccumZAngle(0, 30);
+	}
   
   @Override
   public void periodic() {

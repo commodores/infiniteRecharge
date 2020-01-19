@@ -9,8 +9,11 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
+import static edu.wpi.first.wpilibj.XboxController.Button;
+
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.SimpleAuto;
@@ -62,6 +65,11 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    new JoystickButton(m_driverController, Button.kA.value)
+      .whenPressed(new InstantCommand(m_shifter::lowGear, m_shifter));
+
+    new JoystickButton(m_driverController, Button.kB.value)
+      .whenPressed(new InstantCommand(m_shifter::highGear, m_shifter));
   }
 
 

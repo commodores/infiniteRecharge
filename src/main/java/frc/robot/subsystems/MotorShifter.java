@@ -15,13 +15,23 @@ public class MotorShifter extends SubsystemBase {
   /**
    * Creates a new MotorShifter.
    */
-   public MotorShifter() {
-    //private final Solenoid m_motorSolenoid = 
-    //  new Solenoid(0), new Solenoid(1);
+  private Compressor compressor = new Compressor();
+  private final Solenoid m_motorSolenoid = new Solenoid(0);
+
+  public MotorShifter() {
+    
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  public void highGear() {
+    m_motorSolenoid.set(true);
+  }
+
+  public void lowGear() {
+    m_motorSolenoid.set(false);
   }
 }
