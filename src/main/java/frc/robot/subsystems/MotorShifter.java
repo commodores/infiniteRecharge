@@ -16,8 +16,8 @@ public class MotorShifter extends SubsystemBase {
    * Creates a new MotorShifter.
    */
    public MotorShifter() {
-    private final Solenoid m_motorSolenoid = 
-      new Solenoid(0), new Solenoid(1);
+    //private final Solenoid m_motorSolenoid = 
+    //  new Solenoid(0), new Solenoid(1);
   }
 
   @Override
