@@ -7,15 +7,10 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class MotorShifter extends SubsystemBase {
-  /**
-   * Creates a new MotorShifter.
-   */
-  private Compressor compressor = new Compressor();
   private final Solenoid m_motorSolenoid = new Solenoid(0);
 
   public MotorShifter() {

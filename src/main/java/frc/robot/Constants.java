@@ -19,11 +19,11 @@ public final class Constants {
     public static final class DriveConstants {
         public static final int kLeftMasterPort = 4;
         public static final int kLeftSlave0Port = 3;
-        public static final int kLeftSlave1Port = 5;
+        //public static final int kLeftSlave1Port = 5;
         
         public static final int kRightMasterPort = 1;
         public static final int kRightSlave0Port = 2;
-        public static final int kRightSlave1Port = 0;
+        //public static final int kRightSlave1Port = 0;
     
         public static final int kEncoderCPR = 4096;
         public static final double kWheelDiameterInches = 6;
@@ -48,12 +48,16 @@ public final class Constants {
 
       public static final class OIConstants {
         
-        public static final int kDriverControllerPort = 1;
+        public static final int kDriverControllerPort = 0;
     
       }
 
       public static final class pnuematicConstants{
         public static final int kSolenoid = 1;
         public static final int kSolenoid0 = 2;
+      }
+
+      public static final class TurretConstants {
+        public static final int turretMotorPort = 5;
       }
 }

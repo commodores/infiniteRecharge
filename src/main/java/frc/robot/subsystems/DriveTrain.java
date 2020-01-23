@@ -20,11 +20,11 @@ public class DriveTrain extends SubsystemBase {
 
   private final WPI_TalonSRX leftMaster = new WPI_TalonSRX(DriveConstants.kLeftMasterPort);
   private final WPI_TalonSRX leftSlave0 = new WPI_TalonSRX(DriveConstants.kLeftSlave0Port);
-  private final WPI_TalonSRX leftSlave1 = new WPI_TalonSRX(DriveConstants.kLeftSlave1Port);
+  //private final WPI_TalonSRX leftSlave1 = new WPI_TalonSRX(DriveConstants.kLeftSlave1Port);
 
   private final WPI_TalonSRX rightMaster = new WPI_TalonSRX(DriveConstants.kRightMasterPort);
   private final WPI_TalonSRX rightSlave0 = new WPI_TalonSRX(DriveConstants.kRightSlave0Port);
-  private final WPI_TalonSRX rightSlave1 = new WPI_TalonSRX(DriveConstants.kRightSlave0Port);
+  //private final WPI_TalonSRX rightSlave1 = new WPI_TalonSRX(DriveConstants.kRightSlave1Port);
 
   private final PigeonIMU pigeon = new PigeonIMU(rightSlave0);
 
@@ -34,11 +34,11 @@ public class DriveTrain extends SubsystemBase {
       //reset talons
   leftMaster.configFactoryDefault();
   leftSlave0.configFactoryDefault();
-  leftSlave0.configFactoryDefault();
+  //leftSlave1.configFactoryDefault();
   
   rightMaster.configFactoryDefault();
   rightSlave0.configFactoryDefault();
-  rightSlave0.configFactoryDefault();
+  //rightSlave1.configFactoryDefault();
   
   //setup encoders
   leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
@@ -51,11 +51,11 @@ public class DriveTrain extends SubsystemBase {
   //set talon direction
   leftMaster.setInverted(false);
   leftSlave0.setInverted(false);
-  leftSlave1.setInverted(false);
+  //leftSlave1.setInverted(false);
 
   rightMaster.setInverted(false);
   rightSlave0.setInverted(false);
-  rightSlave1.setInverted(false);
+  //rightSlave1.setInverted(false);
 
   //set encoder direction
   leftMaster.setSensorPhase(false);
@@ -63,19 +63,19 @@ public class DriveTrain extends SubsystemBase {
 
   //set slaves to follow
   leftSlave0.follow(leftMaster);
-  leftSlave1.follow(leftMaster);
+  //leftSlave1.follow(leftMaster);
 
   rightSlave0.follow(rightMaster);
-  rightSlave1.follow(rightMaster);
+  //rightSlave1.follow(rightMaster);
   
   //Coast or Brake
   leftMaster.setNeutralMode(NeutralMode.Brake);
   leftSlave0.setNeutralMode(NeutralMode.Brake);
-  leftSlave1.setNeutralMode(NeutralMode.Brake);
+  //leftSlave1.setNeutralMode(NeutralMode.Brake);
 
   rightMaster.setNeutralMode(NeutralMode.Brake);
   rightSlave0.setNeutralMode(NeutralMode.Brake);
-  rightSlave1.setNeutralMode(NeutralMode.Brake);
+  //rightSlave1.setNeutralMode(NeutralMode.Brake);
 
   m_drive.setSafetyEnabled(false);
 

@@ -19,6 +19,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.SimpleAuto;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.MotorShifter;
+import frc.robot.subsystems.Turret;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -30,6 +31,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveTrain m_drivetrain = new DriveTrain();
   private final MotorShifter m_shifter = new MotorShifter();
+  private final Turret m_turret = new Turret();
 
   private final SimpleAuto m_autoCommand = new SimpleAuto();
 
@@ -70,6 +72,15 @@ public class RobotContainer {
 
     new JoystickButton(m_driverController, Button.kB.value)
       .whenPressed(new InstantCommand(m_shifter::highGear, m_shifter));
+
+    new JoystickButton(m_driverController, Button.kX.value)
+      .whenPressed(() -> m_turret.turnTurret(.25))
+      .whenReleased(() -> m_turret.stopTurret());
+
+    new JoystickButton(m_driverController, Button.kY.value)
+      .whenPressed(() -> m_turret.turnTurret(-.25))
+      .whenReleased(() -> m_turret.stopTurret());
+
   }
 
 
