@@ -60,4 +60,8 @@ public final class Constants {
       public static final class TurretConstants {
         public static final int turretMotorPort = 5;
       }
+      public static final class IntakeConstants{
+        public static final int intakeMotorPort = 6;
+      }
+
 }

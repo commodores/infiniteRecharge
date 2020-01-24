@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import static edu.wpi.first.wpilibj.XboxController.Button;
 
+import javax.annotation.meta.When;
+
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -18,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.SimpleAuto;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.MotorShifter;
 import frc.robot.subsystems.Turret;
 
@@ -32,6 +35,7 @@ public class RobotContainer {
   private final DriveTrain m_drivetrain = new DriveTrain();
   private final MotorShifter m_shifter = new MotorShifter();
   private final Turret m_turret = new Turret();
+  private final Intake m_intake = new Intake();
 
   private final SimpleAuto m_autoCommand = new SimpleAuto();
 
@@ -81,6 +85,9 @@ public class RobotContainer {
       .whenPressed(() -> m_turret.turnTurret(-.25))
       .whenReleased(() -> m_turret.stopTurret());
 
+    new JoystickButton(m_driverController,Button.kBumperLeft.value)
+      .whenPressed(() -> m_intake.BallIn(.25))
+      .whenReleased(() -> m_intake.stopIntake(0));
   }
 
 
