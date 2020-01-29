@@ -7,78 +7,65 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.sensors.PigeonIMU;
+import java.util.Arrays;
+
+import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANEncoder;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.EncoderType;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
+import edu.wpi.first.wpilibj.SPI;
 
 public class DriveTrain extends SubsystemBase {
 
-  private final WPI_TalonSRX leftMaster = new WPI_TalonSRX(DriveConstants.kLeftMasterPort);
-  private final WPI_TalonSRX leftSlave0 = new WPI_TalonSRX(DriveConstants.kLeftSlave0Port);
-  //private final WPI_TalonSRX leftSlave1 = new WPI_TalonSRX(DriveConstants.kLeftSlave1Port);
+  private final CANSparkMax leftMaster, leftSlave0, rightMaster, rightSlave0;
+  
+  private final CANEncoder leftEncoder, rightEncoder;
 
-  private final WPI_TalonSRX rightMaster = new WPI_TalonSRX(DriveConstants.kRightMasterPort);
-  private final WPI_TalonSRX rightSlave0 = new WPI_TalonSRX(DriveConstants.kRightSlave0Port);
-  //private final WPI_TalonSRX rightSlave1 = new WPI_TalonSRX(DriveConstants.kRightSlave1Port);
+  private final AHRS navX;
 
-  private final PigeonIMU pigeon = new PigeonIMU(rightSlave0);
-
-  private final DifferentialDrive m_drive = new DifferentialDrive(leftMaster, rightMaster);
+  private final DifferentialDrive m_drive;
     
   public DriveTrain() {
-      //reset talons
-  leftMaster.configFactoryDefault();
-  leftSlave0.configFactoryDefault();
-  //leftSlave1.configFactoryDefault();
-  
-  rightMaster.configFactoryDefault();
-  rightSlave0.configFactoryDefault();
-  //rightSlave1.configFactoryDefault();
-  
-  //setup encoders
-  leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-  rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+    leftMaster = new CANSparkMax(DriveConstants.kLeftMasterPort,MotorType.kBrushless);
+    leftSlave0 = new CANSparkMax(DriveConstants.kLeftSlave0Port,MotorType.kBrushless);
 
-  //zero encoders
-  leftMaster.setSelectedSensorPosition(0, 0, 10);
-  rightMaster.setSelectedSensorPosition(0, 0, 10); 
+    rightMaster = new CANSparkMax(DriveConstants.kRightMasterPort,MotorType.kBrushless);
+    rightSlave0 = new CANSparkMax(DriveConstants.kRightSlave0Port,MotorType.kBrushless);
 
-  //set talon direction
-  leftMaster.setInverted(false);
-  leftSlave0.setInverted(false);
-  //leftSlave1.setInverted(false);
+    leftEncoder = leftMaster.getEncoder(EncoderType.kQuadrature, 4096);
+    rightEncoder = rightMaster.getEncoder(EncoderType.kQuadrature, 4096);
 
-  rightMaster.setInverted(false);
-  rightSlave0.setInverted(false);
-  //rightSlave1.setInverted(false);
+    navX = new AHRS(SPI.Port.kMXP);
 
-  //set encoder direction
-  leftMaster.setSensorPhase(false);
-  rightMaster.setSensorPhase(true);
+    leftMaster.restoreFactoryDefaults();
+    leftSlave0.restoreFactoryDefaults();
+    rightMaster.restoreFactoryDefaults();
+    rightSlave0.restoreFactoryDefaults();
 
-  //set slaves to follow
-  leftSlave0.follow(leftMaster);
-  //leftSlave1.follow(leftMaster);
+    leftSlave0.follow(leftMaster);
+    rightSlave0.follow(rightMaster);
 
-  rightSlave0.follow(rightMaster);
-  //rightSlave1.follow(rightMaster);
-  
-  //Coast or Brake
-  leftMaster.setNeutralMode(NeutralMode.Brake);
-  leftSlave0.setNeutralMode(NeutralMode.Brake);
-  //leftSlave1.setNeutralMode(NeutralMode.Brake);
+    m_drive = new DifferentialDrive(leftMaster, rightMaster);
+    
+    m_drive.setSafetyEnabled(false);
 
-  rightMaster.setNeutralMode(NeutralMode.Brake);
-  rightSlave0.setNeutralMode(NeutralMode.Brake);
-  //rightSlave1.setNeutralMode(NeutralMode.Brake);
+    // Set current limiting on drve train to prevent brown outs
+    Arrays.asList(leftMaster, leftSlave0, rightMaster, rightSlave0)
+          .forEach((CANSparkMax spark) -> spark.setSmartCurrentLimit(40));
 
-  m_drive.setSafetyEnabled(false);
+    // Set motors to brake when idle. We don't want the drive train to coast.
+    Arrays.asList(leftMaster, leftSlave0, rightMaster, rightSlave0)
+          .forEach((CANSparkMax spark) -> spark.setIdleMode(IdleMode.kBrake));
 
+    //determine real numbers to use here
+    leftMaster.setOpenLoopRampRate(0.5);
+    rightMaster.setOpenLoopRampRate(0.5);
   }
 
   /**
@@ -99,8 +86,8 @@ public class DriveTrain extends SubsystemBase {
    * Resets the drive encoders to currently read a position of 0.
    */
   public void resetEncoders() {
-    leftMaster.setSelectedSensorPosition(0, 0, 10);
-    rightMaster.setSelectedSensorPosition(0, 0, 10);
+    leftEncoder.setPosition(0);
+    rightEncoder.setPosition(0);
   }
 
   /**
@@ -118,7 +105,7 @@ public class DriveTrain extends SubsystemBase {
    * @return the left drive encoder
    */
   public double getLeftDistance() {
-    return leftMaster.getSelectedSensorPosition(0);
+    return leftEncoder.getPosition();
   }
 
   /**
@@ -127,27 +114,27 @@ public class DriveTrain extends SubsystemBase {
    * @return the right drive encoder
    */
   public double getRightDistance() {
-    return rightMaster.getSelectedSensorPosition(0);
+    return rightEncoder.getPosition();
   }
 
-  /**
-   * Sets the max output of the drive.  Useful for scaling the drive to drive more slowly.
-   *
-   * @param maxOutput the maximum output to which the drive will be constrained
-   */
-  public void setMaxOutput(double maxOutput) {
-    m_drive.setMaxOutput(maxOutput);
-  }
+  public double getAngle(){
+		return -navX.getAngle();
+	}
 
-  public double getYaw() {
-    double [] ypr = new double[3];
-    pigeon.getYawPitchRoll(ypr);
-    return ypr[0];
-  }
+	public double getYaw() {
+		return navX.getYaw();
+	}
 
-  public void zeroHeading() {
-		pigeon.setYaw(0, 30);
-		pigeon.setAccumZAngle(0, 30);
+	public double getRoll(){
+		return navX.getRoll();
+	}
+
+	public double getPitch(){
+		return navX.getPitch();
+	}
+
+	public void zeroHeading() {
+		navX.reset();
 	}
   
   @Override
