@@ -19,15 +19,14 @@ public class Turret extends SubsystemBase {
   /**
    * Creates a new Turret.
    */
-  private final TalonSRX turretMotor = new TalonSRX(TurretConstants.kturretMotorPort);
+  private final TalonSRX turretMotor;
 
   public Turret() {
+    turretMotor = new TalonSRX(TurretConstants.kturretMotorPort);
+    
     turretMotor.configFactoryDefault();
-
     turretMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-
     turretMotor.setNeutralMode(NeutralMode.Brake);
-
     turretMotor.set(ControlMode.PercentOutput, 0.0);
   }
 

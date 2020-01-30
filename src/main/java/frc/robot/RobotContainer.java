@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import static edu.wpi.first.wpilibj.XboxController.Button;
 
@@ -22,6 +23,7 @@ import frc.robot.commands.SimpleAuto;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.MotorShifter;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
 
 /**
@@ -36,10 +38,13 @@ public class RobotContainer {
   private final MotorShifter m_shifter = new MotorShifter();
   private final Turret m_turret = new Turret();
   private final Intake m_intake = new Intake();
+  private final Shooter m_shooter = new Shooter();
 
   private final SimpleAuto m_autoCommand = new SimpleAuto();
 
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+  Joystick leftJoystick = new Joystick(OIConstants.kLeftJoystickPort);
+  Joystick rightJoystick = new Joystick(OIConstants.kRightJoystickPort);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -88,6 +93,10 @@ public class RobotContainer {
     new JoystickButton(m_driverController,Button.kBumperLeft.value)
       .whenPressed(() -> m_intake.BallIn(.25))
       .whenReleased(() -> m_intake.stopIntake(0));
+
+    new JoystickButton(m_driverController,Button.kBumperRight.value)
+      .whenPressed(() -> m_shooter.set(.75))
+      .whenReleased(() -> m_shooter.stop());
   }
 
 
