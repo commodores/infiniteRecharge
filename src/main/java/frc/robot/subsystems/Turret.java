@@ -19,7 +19,7 @@ public class Turret extends SubsystemBase {
   /**
    * Creates a new Turret.
    */
-  private final TalonSRX turretMotor = new TalonSRX(TurretConstants.turretMotorPort);
+  private final TalonSRX turretMotor = new TalonSRX(TurretConstants.kturretMotorPort);
 
   public Turret() {
     turretMotor.configFactoryDefault();

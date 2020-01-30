@@ -58,10 +58,21 @@ public final class Constants {
       }
 
       public static final class TurretConstants {
-        public static final int turretMotorPort = 5;
+        public static final int kturretMotorPort = 5;
       }
+
       public static final class IntakeConstants{
-        public static final int intakeMotorPort = 6;
+        public static final int kintakeMotorPort = 6;
+      }
+
+      public static final class ShooterConstants{
+        public static final int kshooterMotor1Port = 7;
+        public static final int kshooterMotor2Port = 8;
+
+        public static final double shooterP = 0.0011;
+        public static final double shooterI = 0;
+        public static final double shooterD = 4;
+        public static final double shooterF = 0.00017;
       }
 
 }
