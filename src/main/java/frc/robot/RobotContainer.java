@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.SimpleAuto;
+import frc.robot.subsystems.Chute;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.MotorShifter;
@@ -34,12 +35,12 @@ import frc.robot.subsystems.Turret;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final DriveTrain m_drivetrain = new DriveTrain();
-  private final MotorShifter m_shifter = new MotorShifter();
-  private final Turret m_turret = new Turret();
-  private final Intake m_intake = new Intake();
+  //private final DriveTrain m_drivetrain = new DriveTrain();
+  //private final MotorShifter m_shifter = new MotorShifter();
+  //private final Turret m_turret = new Turret();
+  //private final Intake m_intake = new Intake();
   private final Shooter m_shooter = new Shooter();
-
+  //private final Chute m_chute = new Chute(); 
   private final SimpleAuto m_autoCommand = new SimpleAuto();
 
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -60,12 +61,13 @@ public class RobotContainer {
         new RunCommand(() -> m_drivetrain.arcadeDrive(
             m_driverController.getX(Hand.kLeft),
             m_driverController.getY(Hand.kRight)),m_drivetrain));
-    */        
+    */
+    /*        
     m_drivetrain.setDefaultCommand(new RunCommand(() -> m_drivetrain.curvatureDrive(
       m_driverController.getRawAxis(3) - m_driverController.getRawAxis(2), 
       m_driverController.getRawAxis(0), 
       m_driverController.getRawButton(2)), m_drivetrain));
-      
+      */
       
   }
 
@@ -76,6 +78,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    /*
     new JoystickButton(m_driverController, Button.kA.value)
       .whenPressed(new InstantCommand(m_shifter::lowGear, m_shifter));
 
@@ -89,14 +92,18 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kY.value)
       .whenPressed(() -> m_turret.turnTurret(-.25))
       .whenReleased(() -> m_turret.stopTurret());
-
+*/
+      /*
     new JoystickButton(m_driverController,Button.kBumperLeft.value)
       .whenPressed(() -> m_intake.BallIn(.25))
       .whenReleased(() -> m_intake.stopIntake(0));
-
+*/
     new JoystickButton(m_driverController,Button.kBumperRight.value)
-      .whenPressed(() -> m_shooter.set(.75))
+      .whenPressed(() -> m_shooter.set(-4000))
       .whenReleased(() -> m_shooter.stop());
+
+    
+    
   }
 
 

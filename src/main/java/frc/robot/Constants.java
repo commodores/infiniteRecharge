@@ -37,5 +37,9 @@ public final class Constants {
     public static final double shooterD = 4;
     public static final double shooterF = 0.00017;
   }
+  public static final class ChuteConstants{
+    public static final int kchuteMotor1Port = 9;
+    public static final int kchuteMotor2Port = 10;
+  }
 
 }

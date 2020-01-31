@@ -17,13 +17,19 @@ public class Shooter extends SubsystemBase {
   private final CANSparkMax shooter2;
   private final CANEncoder encoder;
   private final CANPIDController controller;
+  
 
   double setpoint = 0;
 
   public Shooter() {
+    
+
     shooter1 = new CANSparkMax(ShooterConstants.kshooterMotor1Port, MotorType.kBrushless);
     shooter2 = new CANSparkMax(ShooterConstants.kshooterMotor1Port, MotorType.kBrushless);
     
+    shooter1.restoreFactoryDefaults();
+    shooter2.restoreFactoryDefaults();
+
     shooter2.follow(shooter1, true);
     shooter1.set(0);
 
@@ -47,11 +53,11 @@ public class Shooter extends SubsystemBase {
   }
 
   public void updateConstants() {
-    controller.setOutputRange(-1, 0);
     controller.setP(ShooterConstants.shooterP);
     controller.setI(ShooterConstants.shooterI);
     controller.setD(ShooterConstants.shooterD);
     controller.setFF(ShooterConstants.shooterF);
+    controller.setOutputRange(-1, 0);
   }
 
   @Override
