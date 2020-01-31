@@ -44,8 +44,8 @@ public class RobotContainer {
   private final SimpleAuto m_autoCommand = new SimpleAuto();
 
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
-  Joystick leftJoystick = new Joystick(OIConstants.kLeftJoystickPort);
-  Joystick rightJoystick = new Joystick(OIConstants.kRightJoystickPort);
+  //Joystick leftJoystick = new Joystick(OIConstants.kLeftJoystickPort);
+  //Joystick rightJoystick = new Joystick(OIConstants.kRightJoystickPort);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -99,7 +99,7 @@ public class RobotContainer {
       .whenReleased(() -> m_intake.stopIntake(0));
 */
     new JoystickButton(m_driverController,Button.kA.value)
-      .whileHeld(() -> m_shooter.set(-.5))
+      .whenPressed(() -> m_shooter.set(-.5))
       .whenReleased(() -> m_shooter.stop());
 
     

@@ -1,67 +1,57 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 
-import com.revrobotics.CANPIDController;
-
-import com.revrobotics.CANEncoder;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.ControlType;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 public class Shooter extends SubsystemBase {
-  
-  private final CANSparkMax shooter1;
-  private final CANSparkMax shooter2;
-  private final CANEncoder encoder;
-  private final CANPIDController controller;
-  
+  CANSparkMax m_leftShooterMotor, m_rightShooterMotor;
 
-  double setpoint = 0;
+  double m_setpoint = 0;
 
+  /**
+   * Creates a new Shooter.
+   */
   public Shooter() {
-    
+    m_leftShooterMotor = new CANSparkMax(ShooterConstants.kshooterMotor1Port, MotorType.kBrushless);
+    m_rightShooterMotor = new CANSparkMax(ShooterConstants.kshooterMotor1Port, MotorType.kBrushless);
+    m_rightShooterMotor.setInverted(true);
+    m_leftShooterMotor.setOpenLoopRampRate(ShooterConstants.SHOOTER_VOLTAGE_RAMP_RATE);
+    m_rightShooterMotor.setOpenLoopRampRate(ShooterConstants.SHOOTER_VOLTAGE_RAMP_RATE);
 
-    shooter1 = new CANSparkMax(ShooterConstants.kshooterMotor1Port, MotorType.kBrushless);
-    shooter2 = new CANSparkMax(ShooterConstants.kshooterMotor1Port, MotorType.kBrushless);
-    
-    shooter1.restoreFactoryDefaults();
-    shooter2.restoreFactoryDefaults();
-
-    shooter2.follow(shooter1, true);
-    shooter1.set(0);
-
-    shooter1.setIdleMode(IdleMode.kCoast);
-    shooter2.setIdleMode(IdleMode.kCoast);
-
-    encoder = shooter1.getEncoder();
-    controller = shooter1.getPIDController();
-    controller.setFeedbackDevice(encoder);
-    
-    //stop();
-    updateConstants();
+    m_leftShooterMotor.burnFlash();
+    m_rightShooterMotor.burnFlash();
   }
 
-  public void set(double setpoint) {
-    controller.setReference(setpoint, ControlType.kVelocity);
+  public void set(double speed) {
+    m_leftShooterMotor.set(speed);
+    m_rightShooterMotor.set(speed);
   }
 
   public void stop() {
-    controller.setReference(0, ControlType.kDutyCycle);
+    m_leftShooterMotor.set(0);
+    m_rightShooterMotor.set(0);
   }
 
-  public void updateConstants() {
-    controller.setP(ShooterConstants.shooterP);
-    controller.setI(ShooterConstants.shooterI);
-    controller.setD(ShooterConstants.shooterD);
-    controller.setFF(ShooterConstants.shooterF);
-    controller.setOutputRange(-1, 0);
+  public double getAverageSpeed() {
+    return (getLeftSpeed() + getRightSpeed()) / 2.0;
   }
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
+  public double getRightSpeed() {
+    return m_rightShooterMotor.getEncoder().getVelocity();
+  }
+
+  public double getLeftSpeed() {
+    return m_leftShooterMotor.getEncoder().getVelocity();
+  }
+
+  public double getSetpoint() {
+    return m_setpoint;
+  }
+
+  public void setSetpoint(double setpoint) {
+    m_setpoint = setpoint;
   }
 }
