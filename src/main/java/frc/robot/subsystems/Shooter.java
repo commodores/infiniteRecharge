@@ -40,7 +40,7 @@ public class Shooter extends SubsystemBase {
     controller = shooter1.getPIDController();
     controller.setFeedbackDevice(encoder);
     
-    stop();
+    //stop();
     updateConstants();
   }
 

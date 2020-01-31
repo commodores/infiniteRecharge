@@ -98,8 +98,8 @@ public class RobotContainer {
       .whenPressed(() -> m_intake.BallIn(.25))
       .whenReleased(() -> m_intake.stopIntake(0));
 */
-    new JoystickButton(m_driverController,Button.kBumperRight.value)
-      .whenPressed(() -> m_shooter.set(-4000))
+    new JoystickButton(m_driverController,Button.kA.value)
+      .whileHeld(() -> m_shooter.set(-.5))
       .whenReleased(() -> m_shooter.stop());
 
     
