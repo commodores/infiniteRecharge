@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.Shoot;
 import frc.robot.commands.SimpleAuto;
 import frc.robot.subsystems.Chute;
 import frc.robot.subsystems.DriveTrain;
@@ -41,7 +42,9 @@ public class RobotContainer {
   //private final Intake m_intake = new Intake();
   private final Shooter m_shooter = new Shooter();
   //private final Chute m_chute = new Chute(); 
+  
   private final SimpleAuto m_autoCommand = new SimpleAuto();
+  private final Shoot m_shootCommand = new Shoot(m_shooter);
 
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
   //Joystick leftJoystick = new Joystick(OIConstants.kLeftJoystickPort);
@@ -68,6 +71,8 @@ public class RobotContainer {
       m_driverController.getRawAxis(0), 
       m_driverController.getRawButton(2)), m_drivetrain));
       */
+
+    m_shooter.setDefaultCommand(new Shoot(m_shooter));
       
   }
 
@@ -98,11 +103,6 @@ public class RobotContainer {
       .whenPressed(() -> m_intake.BallIn(.25))
       .whenReleased(() -> m_intake.stopIntake(0));
 */
-    new JoystickButton(m_driverController,Button.kA.value)
-      .whenPressed(() -> m_shooter.set(-.5))
-      .whenReleased(() -> m_shooter.stop());
-
-    
     
   }
 

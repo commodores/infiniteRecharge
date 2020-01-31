@@ -1,5 +1,6 @@
 package frc.robot;
 
+
 public final class Constants {
     
   public static final class DriveConstants {
@@ -36,7 +37,8 @@ public final class Constants {
     public static final double shooterI = 0;
     public static final double shooterD = 4;
     public static final double shooterF = 0.00017;
-    public static final double SHOOTER_VOLTAGE_RAMP_RATE = 0.2;
+    public static final double MAX_RPM = 5700;
+    public static final double SHOOTER_VOLTAGE_RAMP_RATE = .2;
 
   }
   public static final class ChuteConstants{
