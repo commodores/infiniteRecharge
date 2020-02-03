@@ -35,21 +35,30 @@ import frc.robot.subsystems.Turret;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  private static final int button1 = 0;
+  private static final int button2 = 1;
+  //private static final int button3 = 2;
+  //private static final int button4 = 3;
+  //private static final int button5 = 4;
+  //private static final int button6 = 5;
+  //private static final int button7 = 6;
+  //private static final int button8 = 7;
+  //private static final int button9 = 8;
   // The robot's subsystems and commands are defined here...
   //private final DriveTrain m_drivetrain = new DriveTrain();
   //private final MotorShifter m_shifter = new MotorShifter();
   //private final Turret m_turret = new Turret();
   //private final Intake m_intake = new Intake();
   private final Shooter m_shooter = new Shooter();
-  //private final Chute m_chute = new Chute(); 
+  private final Chute m_chute = new Chute(); 
   
   private final SimpleAuto m_autoCommand = new SimpleAuto();
-  private final Shoot m_shootCommand = new Shoot(m_shooter);
+  //private final Shoot m_shootCommand = new Shoot(m_shooter);
 
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
   //Joystick leftJoystick = new Joystick(OIConstants.kLeftJoystickPort);
   //Joystick rightJoystick = new Joystick(OIConstants.kRightJoystickPort);
-
+  Joystick arcadeJoystick = new Joystick(OIConstants.kArcadeJoysitckPort);
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -72,7 +81,7 @@ public class RobotContainer {
       m_driverController.getRawButton(2)), m_drivetrain));
       */
 
-    m_shooter.setDefaultCommand(new Shoot(m_shooter));
+    //m_shooter.setDefaultCommand(new Shoot(m_shooter));
       
   }
 
@@ -103,8 +112,20 @@ public class RobotContainer {
       .whenPressed(() -> m_intake.BallIn(.25))
       .whenReleased(() -> m_intake.stopIntake(0));
 */
+    new JoystickButton(m_driverController, Button.kBumperRight.value)
+      .whenPressed(() -> m_shooter.set(-.8))
+      .whenReleased(() -> m_shooter.stop());
+
+    new JoystickButton(arcadeJoystick, button1)
+      .whenPressed(() -> m_chute.ChuteUp(.5))
+      .whenReleased(() -> m_chute.StopChute(0));
     
+    new JoystickButton(arcadeJoystick, button2)
+      .whenPressed(() -> m_chute.ChuteDown(-.5))
+      .whenReleased(() -> m_chute.StopChute(0));
+
   }
+    
 
 
   /**
