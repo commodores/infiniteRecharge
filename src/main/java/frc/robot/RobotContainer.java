@@ -59,6 +59,7 @@ public class RobotContainer {
   //Joystick leftJoystick = new Joystick(OIConstants.kLeftJoystickPort);
   //Joystick rightJoystick = new Joystick(OIConstants.kRightJoystickPort);
   Joystick arcadeJoystick = new Joystick(OIConstants.kArcadeJoysitckPort);
+  XboxController m_driveXboxController = new XboxController(OIConstants.kXboxDriverControllerPort);
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -116,11 +117,11 @@ public class RobotContainer {
       .whenPressed(() -> m_shooter.set(-.8))
       .whenReleased(() -> m_shooter.stop());
 
-    new JoystickButton(arcadeJoystick, button1)
+    new JoystickButton(m_driveXboxController, Button.kBumperRight.value)
       .whenPressed(() -> m_chute.ChuteUp(.5))
       .whenReleased(() -> m_chute.StopChute(0));
     
-    new JoystickButton(arcadeJoystick, button2)
+    new JoystickButton(m_driveXboxController, Button.kBumperLeft.value)
       .whenPressed(() -> m_chute.ChuteDown(-.5))
       .whenReleased(() -> m_chute.StopChute(0));
 

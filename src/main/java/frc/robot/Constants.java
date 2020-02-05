@@ -16,6 +16,7 @@ public final class Constants {
     public static final int kLeftJoystickPort = 1;
     public static final int kRightJoystickPort = 2;
     public static final int kArcadeJoysitckPort = 3;
+    public static final int kXboxDriverControllerPort = 4;
   }
 
   public static final class pnuematicConstants{
@@ -43,8 +44,8 @@ public final class Constants {
 
   }
   public static final class ChuteConstants{
-    public static final int kchuteMotor1Port = 10;
-    public static final int kchuteMotor2Port = 11;
+    public static final int kchuteMotor1Port = 11;
+    public static final int kchuteMotor2Port = 12;
   }
   
 }
