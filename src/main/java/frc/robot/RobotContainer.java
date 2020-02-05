@@ -47,8 +47,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   //private final DriveTrain m_drivetrain = new DriveTrain();
   //private final MotorShifter m_shifter = new MotorShifter();
-  //private final Turret m_turret = new Turret();
-  //private final Intake m_intake = new Intake();
+  private final Turret m_turret = new Turret();
+  private final Intake m_intake = new Intake();
   private final Shooter m_shooter = new Shooter();
   private final Chute m_chute = new Chute(); 
   
@@ -93,13 +93,13 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    /*
+/*    
     new JoystickButton(m_driverController, Button.kA.value)
       .whenPressed(new InstantCommand(m_shifter::lowGear, m_shifter));
 
     new JoystickButton(m_driverController, Button.kB.value)
       .whenPressed(new InstantCommand(m_shifter::highGear, m_shifter));
-
+*/
     new JoystickButton(m_driverController, Button.kX.value)
       .whenPressed(() -> m_turret.turnTurret(.25))
       .whenReleased(() -> m_turret.stopTurret());
@@ -107,12 +107,12 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kY.value)
       .whenPressed(() -> m_turret.turnTurret(-.25))
       .whenReleased(() -> m_turret.stopTurret());
-*/
-      /*
+ 
+      
     new JoystickButton(m_driverController,Button.kBumperLeft.value)
       .whenPressed(() -> m_intake.BallIn(.25))
       .whenReleased(() -> m_intake.stopIntake(0));
-*/
+
     new JoystickButton(m_driverController, Button.kBumperRight.value)
       .whenPressed(() -> m_shooter.set(-.8))
       .whenReleased(() -> m_shooter.stop());
