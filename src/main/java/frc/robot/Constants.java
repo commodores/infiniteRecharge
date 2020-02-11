@@ -47,5 +47,8 @@ public final class Constants {
     public static final int kchuteMotor1Port = 11;
     public static final int kchuteMotor2Port = 12;
   }
-  
+  public static final class ElevatorConstants{
+    public static final int kelevatorMotor1Port = 13;
+    public static final int kelevatorMotor2Port = 14;
+  }
 }
