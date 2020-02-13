@@ -10,7 +10,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -26,7 +25,7 @@ public class Turret extends SubsystemBase {
     turretMotor = new WPI_TalonSRX(TurretConstants.kturretMotorPort);
     
     turretMotor.configFactoryDefault();
-    turretMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+    turretMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute,0,10);
     turretMotor.setNeutralMode(NeutralMode.Brake);
     turretMotor.set(ControlMode.PercentOutput, 0.0);
   }

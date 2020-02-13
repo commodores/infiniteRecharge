@@ -10,40 +10,43 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import frc.robot.Constants.ElevatorConstants;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ChuteConstants;
 
-public class LeftElevator extends SubsystemBase {
+public class UpperChute extends SubsystemBase {
   /**
-   * Creates a new LeftElevator.
-   * 
+   * Creates a new Chute.
    */
+  private final WPI_TalonSRX upperChuteMotor;
 
-   private final WPI_TalonSRX leftElevator;
-  public LeftElevator() {
+  public UpperChute() {
 
-    leftElevator = new WPI_TalonSRX(ElevatorConstants.kelevatorMotor1Port);
-
-    leftElevator.configFactoryDefault();
-
-    leftElevator.setNeutralMode(NeutralMode.Brake);
-
-    leftElevator.set(ControlMode.PercentOutput, 0.0);
-
-  }
-
-  public void ElevatorUp(double speed){
-    leftElevator.set(ControlMode.PercentOutput, speed);
-  }
-
-  public void ElevatorDown(double speed){
-    leftElevator.set(ControlMode.PercentOutput, speed);
-  }
-
-  public void StopElevator(double speed){
-    leftElevator.set(0.0);
-  }
+  upperChuteMotor = new WPI_TalonSRX(ChuteConstants.kchuteMotor1Port);
   
+    
+  upperChuteMotor.configFactoryDefault();
+  
+  upperChuteMotor.setNeutralMode(NeutralMode.Coast);
+
+  upperChuteMotor.set(ControlMode.PercentOutput, 0.0);
+
+  }
+
+  public void ChuteUp(double speed){
+    upperChuteMotor.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void ChuteDown(double speed){
+    upperChuteMotor.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void StopChute(double speed){
+    upperChuteMotor.set(0.0);
+  }
+
+  
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

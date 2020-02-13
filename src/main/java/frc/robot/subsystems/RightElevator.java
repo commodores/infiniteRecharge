@@ -24,8 +24,6 @@ public class RightElevator extends SubsystemBase {
     rightElevator = new WPI_TalonSRX(ElevatorConstants.kelevatorMotor2Port);
 
     rightElevator.configFactoryDefault();
-
-    rightElevator.setSafetyEnabled(false);
     
     rightElevator.setNeutralMode(NeutralMode.Brake);
 

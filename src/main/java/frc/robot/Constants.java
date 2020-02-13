@@ -26,6 +26,8 @@ public final class Constants {
 
   public static final class TurretConstants {
     public static final int kturretMotorPort = 5;
+    public static final int klimeLightHeight = 30;//inches
+    public static final int ktargetHeight = 81;//inches
   }
 
   public static final class IntakeConstants{

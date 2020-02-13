@@ -15,46 +15,35 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ChuteConstants;
 
-public class Chute extends SubsystemBase {
+public class LowerChute extends SubsystemBase {
   /**
    * Creates a new Chute.
    */
-  private final WPI_TalonSRX ChuteMotor;
-  private final WPI_TalonSRX ChuteSlave;
+  private final WPI_TalonSRX lowerChuteMotor;
 
-  public Chute() {
+  public LowerChute() {
 
-  ChuteSlave = new WPI_TalonSRX(ChuteConstants.kchuteMotor2Port);
-  ChuteMotor = new WPI_TalonSRX(ChuteConstants.kchuteMotor1Port);
-
+  lowerChuteMotor = new WPI_TalonSRX(ChuteConstants.kchuteMotor1Port);
+  
     
-  ChuteMotor.configFactoryDefault();
-  ChuteSlave.configFactoryDefault();
-
-  ChuteSlave.follow(ChuteMotor);
+  lowerChuteMotor.configFactoryDefault();
   
-  ChuteMotor.setSafetyEnabled(false);
-  ChuteSlave.setSafetyEnabled(false);
+  lowerChuteMotor.setNeutralMode(NeutralMode.Coast);
 
-  ChuteMotor.setNeutralMode(NeutralMode.Coast);
-  ChuteSlave.setNeutralMode(NeutralMode.Coast);
-
-  ChuteMotor.set(ControlMode.PercentOutput, 0.0);
-
-  
+  lowerChuteMotor.set(ControlMode.PercentOutput, 0.0);
 
   }
 
   public void ChuteUp(double speed){
-    ChuteMotor.set(ControlMode.PercentOutput, speed);
+    lowerChuteMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public void ChuteDown(double speed){
-    ChuteMotor.set(ControlMode.PercentOutput, speed);
+    lowerChuteMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public void StopChute(double speed){
-    ChuteMotor.set(0.0);
+    lowerChuteMotor.set(0.0);
   }
 
   

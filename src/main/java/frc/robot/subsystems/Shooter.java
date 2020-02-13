@@ -25,8 +25,8 @@ public class Shooter extends SubsystemBase {
     m_leftShooterMotor.setOpenLoopRampRate(ShooterConstants.SHOOTER_VOLTAGE_RAMP_RATE);
     m_rightShooterMotor.setOpenLoopRampRate(ShooterConstants.SHOOTER_VOLTAGE_RAMP_RATE);
 
-    m_leftShooterMotor.burnFlash();
-    m_rightShooterMotor.burnFlash();
+    //m_leftShooterMotor.burnFlash();
+    //m_rightShooterMotor.burnFlash();
   }
 
   public void set(double speed) {
