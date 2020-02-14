@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
 
@@ -19,6 +20,7 @@ public class RightElevator extends SubsystemBase {
    * Creates a new RightElevator.
    */
   private final WPI_TalonSRX rightElevator;
+  private final Solenoid m_ratchetSolenoid2 = new Solenoid(2);
   public RightElevator() {
 
     rightElevator = new WPI_TalonSRX(ElevatorConstants.kelevatorMotor2Port);
@@ -40,6 +42,14 @@ public class RightElevator extends SubsystemBase {
 
   public void StopElevator2(double speed){
     rightElevator.set(0.0);
+  }
+
+  public void ratchetOn(){
+    m_ratchetSolenoid2.set(true);
+  }
+
+  public void ratchetOff(){
+    m_ratchetSolenoid2.set(false);
   }
 
   @Override
