@@ -4,16 +4,11 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
   CANSparkMax m_leftShooterMotor, m_rightShooterMotor;
 
-  
-  /**
-   * Creates a new Shooter.
-   */
   public Shooter() {
     m_leftShooterMotor = new CANSparkMax(ShooterConstants.kshooterMotor1Port, MotorType.kBrushless);
     m_rightShooterMotor = new CANSparkMax(ShooterConstants.kshooterMotor2Port, MotorType.kBrushless);
@@ -24,9 +19,6 @@ public class Shooter extends SubsystemBase {
     m_rightShooterMotor.setInverted(true);
     m_leftShooterMotor.setOpenLoopRampRate(ShooterConstants.SHOOTER_VOLTAGE_RAMP_RATE);
     m_rightShooterMotor.setOpenLoopRampRate(ShooterConstants.SHOOTER_VOLTAGE_RAMP_RATE);
-
-    //m_leftShooterMotor.burnFlash();
-    //m_rightShooterMotor.burnFlash();
   }
 
   public void set(double speed) {

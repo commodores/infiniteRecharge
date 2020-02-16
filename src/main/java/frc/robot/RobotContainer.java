@@ -120,24 +120,24 @@ public class RobotContainer {
  
       
     new JoystickButton(m_driverController,Button.kBumperLeft.value)
-      .whenPressed(() -> m_intake.BallIn(.25))
-      .whenReleased(() -> m_intake.stopIntake(0));
+      .whenPressed(() -> m_intake.BallIn())
+      .whenReleased(() -> m_intake.stopIntake());
 
     new JoystickButton(m_driverController, Button.kBumperRight.value)
       .whenPressed(() -> m_shooter.set(-.8))
       .whenReleased(() -> m_shooter.stop());
 
     new JoystickButton(m_driveXboxController, Button.kBumperRight.value)
-      .whenPressed(() -> m_upperChute.ChuteUp(.5))
-      .whenPressed(() -> m_lowerChute.ChuteUp(.5))
-      .whenReleased(() -> m_upperChute.StopChute(0))
-      .whenReleased(() -> m_lowerChute.StopChute(0));
+      .whenPressed(() -> m_upperChute.ChuteUp())
+      .whenPressed(() -> m_lowerChute.ChuteUp())
+      .whenReleased(() -> m_upperChute.StopChute())
+      .whenReleased(() -> m_lowerChute.StopChute());
     
     new JoystickButton(m_driveXboxController, Button.kBumperLeft.value)
-      .whenPressed(() -> m_upperChute.ChuteDown(-.5))
-      .whenPressed(() -> m_lowerChute.ChuteDown(-.5))
-      .whenReleased(() -> m_upperChute.StopChute(0))
-      .whenReleased(() -> m_lowerChute.StopChute(0));
+      .whenPressed(() -> m_upperChute.ChuteDown())
+      .whenPressed(() -> m_lowerChute.ChuteDown())
+      .whenReleased(() -> m_upperChute.StopChute())
+      .whenReleased(() -> m_lowerChute.StopChute());
     /*
     new JoystickButton(m_driveXboxController, Button.kA.value)
       .whenPressed(() -> m_leftElevator.ratchetOn())

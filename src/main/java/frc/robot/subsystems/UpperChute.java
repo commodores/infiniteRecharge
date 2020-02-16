@@ -1,51 +1,36 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ChuteConstants;
 
 public class UpperChute extends SubsystemBase {
-  /**
-   * Creates a new Chute.
-   */
-  private final WPI_TalonSRX upperChuteMotor;
+
+  private final TalonSRX upperChuteMotor;
 
   public UpperChute() {
 
-  upperChuteMotor = new WPI_TalonSRX(ChuteConstants.kchuteMotor1Port);
-  
+    upperChuteMotor = new TalonSRX(ChuteConstants.kchuteMotor1Port);
     
-  upperChuteMotor.configFactoryDefault();
-  
-  upperChuteMotor.setNeutralMode(NeutralMode.Coast);
-
-  upperChuteMotor.set(ControlMode.PercentOutput, 0.0);
-
+    upperChuteMotor.configFactoryDefault();
+    upperChuteMotor.setNeutralMode(NeutralMode.Coast);
+    upperChuteMotor.set(ControlMode.PercentOutput, 0.0);
   }
 
-  public void ChuteUp(double speed){
-    upperChuteMotor.set(ControlMode.PercentOutput, speed);
+  public void ChuteUp(){
+    upperChuteMotor.set(ControlMode.PercentOutput, .5);
   }
 
-  public void ChuteDown(double speed){
-    upperChuteMotor.set(ControlMode.PercentOutput, speed);
+  public void ChuteDown(){
+    upperChuteMotor.set(ControlMode.PercentOutput, -.5);
   }
 
-  public void StopChute(double speed){
-    upperChuteMotor.set(0.0);
+  public void StopChute(){
+    upperChuteMotor.set(ControlMode.PercentOutput, 0.0);
   }
-
-  
 
   @Override
   public void periodic() {

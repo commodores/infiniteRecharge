@@ -1,35 +1,31 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.IntakeConstants;
 
 public class Intake extends SubsystemBase {
-  /**
-   * Creates a new Intake.
-   */
-  private final CANSparkMax IntakeMotor = new CANSparkMax(5, MotorType.kBrushless);
+
+  private final TalonSRX IntakeMotor;
+
   public Intake() {
-    IntakeMotor.getIdleMode();
-    IntakeMotor.getInitialMotorType();
-    IntakeMotor.clearFaults();
+    IntakeMotor = new TalonSRX(IntakeConstants.kintakeMotorPort);
+
+    IntakeMotor.configFactoryDefault();
+    IntakeMotor.setNeutralMode(NeutralMode.Coast);
+    IntakeMotor.set(ControlMode.PercentOutput, 0.0);
   }
-  public void BallIn(double Speed){
-    IntakeMotor.set(Speed);
+  public void BallIn(){
+    IntakeMotor.set(ControlMode.PercentOutput, .5);
   }
-  public void BallOut(double Speed){
-    IntakeMotor.set(Speed);
+  public void BallOut(){
+    IntakeMotor.set(ControlMode.PercentOutput, -.5);
   }
-  public void stopIntake(double Speed){
-    IntakeMotor.set(0);
+  public void stopIntake(){
+    IntakeMotor.set(ControlMode.PercentOutput, 0.0);
   }
 
   @Override
