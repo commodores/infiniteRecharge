@@ -4,8 +4,8 @@ package frc.robot;
 public final class Constants {
     
   public static final class DriveConstants {
-    public static final int kLeftMasterPort = 4;
-    public static final int kLeftSlave0Port = 3;
+    public static final int kLeftMasterPort = 3;
+    public static final int kLeftSlave0Port = 4;
     
     public static final int kRightMasterPort = 1;
     public static final int kRightSlave0Port = 2;
