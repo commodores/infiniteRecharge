@@ -13,7 +13,7 @@ public class LeftElevator extends SubsystemBase {
   
   public LeftElevator() {
 
-    leftElevator = new TalonSRX(ElevatorConstants.kelevatorMotor1Port);
+    leftElevator = new TalonSRX(ElevatorConstants.kelevatorMotorLeftPort);
 
     leftElevator.configFactoryDefault();
     leftElevator.setNeutralMode(NeutralMode.Brake);

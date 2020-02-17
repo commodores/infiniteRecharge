@@ -13,7 +13,7 @@ public class UpperChute extends SubsystemBase {
 
   public UpperChute() {
 
-    upperChuteMotor = new TalonSRX(ChuteConstants.kchuteMotor1Port);
+    upperChuteMotor = new TalonSRX(ChuteConstants.kchuteMotorUpperPort);
     
     upperChuteMotor.configFactoryDefault();
     upperChuteMotor.setNeutralMode(NeutralMode.Coast);
@@ -21,11 +21,11 @@ public class UpperChute extends SubsystemBase {
   }
 
   public void ChuteUp(){
-    upperChuteMotor.set(ControlMode.PercentOutput, .5);
+    upperChuteMotor.set(ControlMode.PercentOutput, .25);
   }
 
   public void ChuteDown(){
-    upperChuteMotor.set(ControlMode.PercentOutput, -.5);
+    upperChuteMotor.set(ControlMode.PercentOutput, -.25);
   }
 
   public void StopChute(){

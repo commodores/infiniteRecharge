@@ -11,7 +11,7 @@ public class LowerChute extends SubsystemBase {
 
   public LowerChute() {
 
-    lowerChuteMotor = new TalonSRX(ChuteConstants.kchuteMotor1Port);
+    lowerChuteMotor = new TalonSRX(ChuteConstants.kchuteMotorLowerPort);
     
     lowerChuteMotor.configFactoryDefault();
     lowerChuteMotor.setNeutralMode(NeutralMode.Coast);
@@ -19,11 +19,11 @@ public class LowerChute extends SubsystemBase {
   }
 
   public void ChuteUp(){
-    lowerChuteMotor.set(ControlMode.PercentOutput, .5);
+    lowerChuteMotor.set(ControlMode.PercentOutput, -.25);
   }
 
   public void ChuteDown(){
-    lowerChuteMotor.set(ControlMode.PercentOutput, -.5);
+    lowerChuteMotor.set(ControlMode.PercentOutput, .25);
   }
 
   public void StopChute(){

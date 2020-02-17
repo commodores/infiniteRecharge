@@ -15,7 +15,7 @@ public class RightElevator extends SubsystemBase {
   
   public RightElevator() {
 
-    rightElevator = new TalonSRX(ElevatorConstants.kelevatorMotor2Port);
+    rightElevator = new TalonSRX(ElevatorConstants.kelevatorMotorRightPort);
 
     rightElevator.configFactoryDefault();
     rightElevator.setNeutralMode(NeutralMode.Brake);
