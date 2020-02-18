@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -31,14 +24,8 @@ import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.UpperChute;
 import edu.wpi.first.wpilibj.Compressor;
 
-/**
- * This class is where the bulk of the robot should be declared.  Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
- * (including subsystems, commands, and button mappings) should be declared here.
- */
+
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
   private final DriveTrain m_drivetrain = new DriveTrain();
   private final MotorShifter m_shifter = new MotorShifter();
   private final Compressor m_compressor = new Compressor();
@@ -61,8 +48,8 @@ public class RobotContainer {
     configureButtonBindings();
          
     m_drivetrain.setDefaultCommand(new DrivetrainDrive(
-      () -> applyJoystickDeadBand(-m_driverController.getX(Hand.kLeft)) * DriveConstants.joystickSpeedConstant,
-      () -> applyJoystickDeadBand(-m_driverController.getY(Hand.kRight)) * DriveConstants.joystickTurnConstant,
+      () -> applyJoystickDeadBand((m_driverController.getTriggerAxis(Hand.kRight)-m_driverController.getTriggerAxis(Hand.kLeft))) * DriveConstants.joystickSpeedConstant,
+      () -> applyJoystickDeadBand(m_driverController.getY(Hand.kLeft)) * DriveConstants.joystickTurnConstant,
       m_drivetrain));
       
   }
@@ -76,8 +63,7 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kY.value)
       .whenPressed(() -> m_turret.turnTurret(-.25))
       .whenReleased(() -> m_turret.stopTurret());
- 
-      
+       
     new JoystickButton(m_driverController,Button.kBumperLeft.value)
       .whenPressed(() -> m_intake.BallIn())
       .whenReleased(() -> m_intake.stopIntake());
@@ -101,10 +87,8 @@ public class RobotContainer {
   }
 
   public double applyJoystickDeadBand(double originalValue) {
-    //zero small inputs
     if (Math.abs(originalValue) < DriveConstants.minimumJoystickInput) return 0;
 
-    //scale larger inputs to maintain smoothness
     if (originalValue < 0) return originalValue + DriveConstants.minimumJoystickInput;
     return originalValue - DriveConstants.minimumJoystickInput;
   }
