@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.util.Units;
 
 public final class Constants {
     
@@ -9,6 +10,15 @@ public final class Constants {
     
     public static final int kRightMasterPort = 1;
     public static final int kRightSlave0Port = 2;
+
+    public static final int kPigeonPort = 9;
+
+    public static final double drivetrainWidth = Units.inchesToMeters(29);
+    public static final double drivetrainEncoderConversionFactor = Units.inchesToMeters(6 * Math.PI) / 13;
+
+    public static final double joystickSpeedConstant = 1.2;
+    public static final double joystickTurnConstant = 1.4;
+    public static final double minimumJoystickInput = 0.1;
   }
 
   public static final class OIConstants {

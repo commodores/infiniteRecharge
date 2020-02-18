@@ -7,18 +7,18 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
+
 import static edu.wpi.first.wpilibj.XboxController.Button;
 
-import javax.annotation.meta.When;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.DrivetrainDrive;
 import frc.robot.commands.SimpleAuto;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
@@ -60,10 +60,10 @@ public class RobotContainer {
 
     configureButtonBindings();
          
-    m_drivetrain.setDefaultCommand(new RunCommand(() -> m_drivetrain.curvatureDrive(
-      m_driverController.getRawAxis(3) - m_driverController.getRawAxis(2), 
-      m_driverController.getRawAxis(0), 
-      m_driverController.getRawButton(2)), m_drivetrain));
+    m_drivetrain.setDefaultCommand(new DrivetrainDrive(
+      () -> applyJoystickDeadBand(-m_driverController.getX(Hand.kLeft)) * DriveConstants.joystickSpeedConstant,
+      () -> applyJoystickDeadBand(-m_driverController.getY(Hand.kRight)) * DriveConstants.joystickTurnConstant,
+      m_drivetrain));
       
   }
 
@@ -98,5 +98,14 @@ public class RobotContainer {
     
   public Command getAutonomousCommand() {
     return m_autoCommand;
+  }
+
+  public double applyJoystickDeadBand(double originalValue) {
+    //zero small inputs
+    if (Math.abs(originalValue) < DriveConstants.minimumJoystickInput) return 0;
+
+    //scale larger inputs to maintain smoothness
+    if (originalValue < 0) return originalValue + DriveConstants.minimumJoystickInput;
+    return originalValue - DriveConstants.minimumJoystickInput;
   }
 }
