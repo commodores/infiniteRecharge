@@ -25,11 +25,11 @@ public class RightElevator extends SubsystemBase {
   }
 
   public void Elevator2Up(){
-    rightElevator.set(ControlMode.PercentOutput, -.5);
+    rightElevator.set(ControlMode.PercentOutput, -1);
   }
 
   public void Elevator2Down(){
-    rightElevator.set(ControlMode.PercentOutput, .5);
+    rightElevator.set(ControlMode.PercentOutput, 1);
   } 
 
   public void StopElevator2(){

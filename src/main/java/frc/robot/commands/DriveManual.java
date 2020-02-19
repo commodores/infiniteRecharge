@@ -29,8 +29,20 @@ public class DriveManual extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //m_drivetrain.pathDrive(RobotContainer.m_driverController.getRawAxis(1), RobotContainer.m_driverController.getRawAxis(5));
-    m_drivetrain.curvatureDrive(RobotContainer.m_driverController.getRawAxis(3) - RobotContainer.m_driverController.getRawAxis(2), -RobotContainer.m_driverController.getRawAxis(0), true);
+
+    double speed = RobotContainer.m_driverController.getRawAxis(3) - RobotContainer.m_driverController.getRawAxis(2);
+    double rotation = -RobotContainer.m_driverController.getRawAxis(0);
+    boolean quickTurn = speed > -0.2 && speed < 0.2;
+
+    if( speed > -0.1 && speed < 0.1){
+      speed = 0;
+    }
+
+    if( rotation > -0.1 && rotation < 0.1){
+      rotation = 0;
+    }
+    
+    m_drivetrain.curvatureDrive(speed, rotation, quickTurn);
   }
 
   // Called once the command ends or is interrupted.

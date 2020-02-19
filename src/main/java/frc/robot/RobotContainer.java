@@ -7,8 +7,6 @@ import static edu.wpi.first.wpilibj.XboxController.Button;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.SimpleAuto;
 import frc.robot.subsystems.DriveTrain;
@@ -19,13 +17,10 @@ import frc.robot.subsystems.RightElevator;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.UpperChute;
-import edu.wpi.first.wpilibj.Compressor;
 
 
 public class RobotContainer {
   private final DriveTrain m_drivetrain = new DriveTrain();
-  //private final MotorShifter m_shifter = new MotorShifter();
-  //private final Compressor m_compressor = new Compressor();
   private final Turret m_turret = new Turret();
   private final Intake m_intake = new Intake();
   private final Shooter m_shooter = new Shooter();
@@ -43,12 +38,6 @@ public class RobotContainer {
   public RobotContainer() {
 
     configureButtonBindings();
-
-    //m_drivetrain.setDefaultCommand(new RunCommand(() -> {
-    //  m_drivetrain.pathDrive(m_driverController.getRawAxis(1),
-    //  m_driverController.getRawAxis(5));
-    //}, m_drivetrain));
-
               
   }
 
@@ -84,10 +73,4 @@ public class RobotContainer {
     return m_autoCommand;
   }
 
-  public double applyJoystickDeadBand(double originalValue) {
-    if (Math.abs(originalValue) < DriveConstants.minimumJoystickInput) return 0;
-
-    if (originalValue < 0) return originalValue + DriveConstants.minimumJoystickInput;
-    return originalValue - DriveConstants.minimumJoystickInput;
-  }
 }

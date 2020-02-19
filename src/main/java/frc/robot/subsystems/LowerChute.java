@@ -19,11 +19,11 @@ public class LowerChute extends SubsystemBase {
   }
 
   public void ChuteUp(){
-    lowerChuteMotor.set(ControlMode.PercentOutput, -.35);
+    lowerChuteMotor.set(ControlMode.PercentOutput, -.25);
   }
 
   public void ChuteDown(){
-    lowerChuteMotor.set(ControlMode.PercentOutput, .35);
+    lowerChuteMotor.set(ControlMode.PercentOutput, .25);
   }
 
   public void StopChute(){

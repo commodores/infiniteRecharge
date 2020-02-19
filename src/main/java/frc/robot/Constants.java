@@ -29,11 +29,6 @@ public final class Constants {
     public static final int kXboxDriverControllerPort = 4;
   }
 
-  public static final class pnuematicConstants{
-    public static final int kSolenoid = 1;
-    public static final int kSolenoid0 = 2;
-  }
-
   public static final class TurretConstants {
     public static final int kturretMotorPort = 5;
     public static final int klimeLightHeight = 30;//inches
