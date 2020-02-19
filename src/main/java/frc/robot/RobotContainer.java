@@ -2,22 +2,19 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 import static edu.wpi.first.wpilibj.XboxController.Button;
 
-
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.DrivetrainDrive;
 import frc.robot.commands.SimpleAuto;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LeftElevator;
 import frc.robot.subsystems.LowerChute;
-import frc.robot.subsystems.MotorShifter;
 import frc.robot.subsystems.RightElevator;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
@@ -27,8 +24,8 @@ import edu.wpi.first.wpilibj.Compressor;
 
 public class RobotContainer {
   private final DriveTrain m_drivetrain = new DriveTrain();
-  private final MotorShifter m_shifter = new MotorShifter();
-  private final Compressor m_compressor = new Compressor();
+  //private final MotorShifter m_shifter = new MotorShifter();
+  //private final Compressor m_compressor = new Compressor();
   private final Turret m_turret = new Turret();
   private final Intake m_intake = new Intake();
   private final Shooter m_shooter = new Shooter();
@@ -39,19 +36,20 @@ public class RobotContainer {
   
   private final SimpleAuto m_autoCommand = new SimpleAuto();
 
-  XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
-  Joystick leftJoystick = new Joystick(OIConstants.kLeftJoystickPort);
-  Joystick rightJoystick = new Joystick(OIConstants.kRightJoystickPort);
+  public static final XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+  public static final Joystick leftJoystick = new Joystick(OIConstants.kLeftJoystickPort);
+  public static final Joystick rightJoystick = new Joystick(OIConstants.kRightJoystickPort);
   
   public RobotContainer() {
 
     configureButtonBindings();
-         
-    m_drivetrain.setDefaultCommand(new DrivetrainDrive(
-      () -> applyJoystickDeadBand((m_driverController.getTriggerAxis(Hand.kRight)-m_driverController.getTriggerAxis(Hand.kLeft))) * DriveConstants.joystickSpeedConstant,
-      () -> applyJoystickDeadBand(m_driverController.getY(Hand.kLeft)) * DriveConstants.joystickTurnConstant,
-      m_drivetrain));
-      
+
+    //m_drivetrain.setDefaultCommand(new RunCommand(() -> {
+    //  m_drivetrain.pathDrive(m_driverController.getRawAxis(1),
+    //  m_driverController.getRawAxis(5));
+    //}, m_drivetrain));
+
+              
   }
 
   private void configureButtonBindings() {
@@ -69,7 +67,7 @@ public class RobotContainer {
       .whenReleased(() -> m_intake.stopIntake());
 
     new JoystickButton(m_driverController, Button.kBumperRight.value)
-      .whenPressed(() -> m_shooter.set(1))
+      .whenPressed(() -> m_shooter.set(1.0))
       .whenReleased(() -> m_shooter.stop());
 
     new JoystickButton(m_driverController, Button.kA.value)

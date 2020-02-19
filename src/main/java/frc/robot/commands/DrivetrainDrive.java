@@ -9,6 +9,8 @@ public class DrivetrainDrive extends CommandBase {
 private final DriveTrain m_drive;
 private DoubleSupplier speed;
 private DoubleSupplier turn;
+private DoubleSupplier rotation;
+private Boolean quickturn;
 
     public DrivetrainDrive(DoubleSupplier speed, DoubleSupplier turn, DriveTrain m_subsystem) {
         m_drive = m_subsystem;
@@ -16,10 +18,12 @@ private DoubleSupplier turn;
 
         this.speed = speed;
         this.turn = turn;
+        this.rotation = rotation;
     }
 
 	@Override
     public void execute() {
-        m_drive.arcadeDrive(speed.getAsDouble(), turn.getAsDouble());
+        //m_drive.arcadeDrive(speed.getAsDouble(), turn.getAsDouble());
+        m_drive.curvatureDrive(speed.getAsDouble(), rotation.getAsDouble(), false);
     }
 }

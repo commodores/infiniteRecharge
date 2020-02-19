@@ -24,7 +24,7 @@ public class Turret extends SubsystemBase {
   public Turret() {
     turretMotor = new WPI_TalonSRX(TurretConstants.kturretMotorPort);
     
-    turretMotor.configFactoryDefault();
+    //turretMotor.configFactoryDefault();
     turretMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute,0,10);
     turretMotor.setNeutralMode(NeutralMode.Brake);
     turretMotor.set(ControlMode.PercentOutput, 0.0);

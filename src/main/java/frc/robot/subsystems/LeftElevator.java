@@ -4,12 +4,11 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import frc.robot.Constants.ElevatorConstants;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.*;
 
 public class LeftElevator extends SubsystemBase {
   private final TalonSRX leftElevator;
-  private final Solenoid m_ratchetSolenoid1 = new Solenoid(1);
   
   public LeftElevator() {
 
@@ -18,6 +17,8 @@ public class LeftElevator extends SubsystemBase {
     leftElevator.configFactoryDefault();
     leftElevator.setNeutralMode(NeutralMode.Brake);
     leftElevator.set(ControlMode.PercentOutput, 0.0);
+
+    setDefaultCommand(new ElevatorManual(this));
   }
 
   public void ElevatorUp(){
@@ -31,14 +32,6 @@ public class LeftElevator extends SubsystemBase {
   public void StopElevator(){
     leftElevator.set(ControlMode.PercentOutput, 0.0);
   }
-
-  public void ratchetOn(){
-    m_ratchetSolenoid1.set(true);
-  }
-
-  public void ratchetOff(){
-    m_ratchetSolenoid1.set(false);
-  } 
   
   @Override
   public void periodic() {

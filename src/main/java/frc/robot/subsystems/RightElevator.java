@@ -7,11 +7,11 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
+import frc.robot.commands.ElevatorManualTwo;
 
 public class RightElevator extends SubsystemBase {
 
   private final TalonSRX rightElevator;
-  private final Solenoid m_ratchetSolenoid2 = new Solenoid(2);
   
   public RightElevator() {
 
@@ -20,6 +20,8 @@ public class RightElevator extends SubsystemBase {
     rightElevator.configFactoryDefault();
     rightElevator.setNeutralMode(NeutralMode.Brake);
     rightElevator.set(ControlMode.PercentOutput, 0.0);
+
+    setDefaultCommand(new ElevatorManualTwo(this));
   }
 
   public void Elevator2Up(){
@@ -34,14 +36,7 @@ public class RightElevator extends SubsystemBase {
     rightElevator.set(ControlMode.PercentOutput, 0.0);
   }
 
-  public void ratchetOn(){
-    m_ratchetSolenoid2.set(true);
-  }
-
-  public void ratchetOff(){
-    m_ratchetSolenoid2.set(false);
-  }
-
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
