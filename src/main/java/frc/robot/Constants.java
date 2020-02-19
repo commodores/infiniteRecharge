@@ -37,6 +37,7 @@ public final class Constants {
 
   public static final class IntakeConstants{
     public static final int kintakeMotorPort = 6;
+    public static final int kintakeRetractPort = 10;
   }
 
   public static final class ShooterConstants{

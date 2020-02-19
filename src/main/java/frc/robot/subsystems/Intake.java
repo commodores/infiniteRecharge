@@ -3,29 +3,52 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 
 public class Intake extends SubsystemBase {
 
-  private final TalonSRX IntakeMotor;
+  private final TalonSRX intakeMotor;
+  private final VictorSPX intakeRetractMotor;
 
   public Intake() {
-    IntakeMotor = new TalonSRX(IntakeConstants.kintakeMotorPort);
+    intakeMotor = new TalonSRX(IntakeConstants.kintakeMotorPort);
+    intakeRetractMotor = new VictorSPX(IntakeConstants.kintakeRetractPort);
 
-    IntakeMotor.configFactoryDefault();
-    IntakeMotor.setNeutralMode(NeutralMode.Coast);
-    IntakeMotor.set(ControlMode.PercentOutput, 0.0);
+    intakeMotor.configFactoryDefault();
+    intakeRetractMotor.configFactoryDefault();
+
+    intakeMotor.setNeutralMode(NeutralMode.Coast);
+    intakeRetractMotor.setNeutralMode(NeutralMode.Brake);
+
+    intakeMotor.set(ControlMode.PercentOutput, 0.0);
+    intakeRetractMotor.set(ControlMode.PercentOutput, 0.0);
   }
+  
   public void BallIn(){
-    IntakeMotor.set(ControlMode.PercentOutput, .5);
+    intakeMotor.set(ControlMode.PercentOutput, .5);
   }
+  
   public void BallOut(){
-    IntakeMotor.set(ControlMode.PercentOutput, -.5);
+    intakeMotor.set(ControlMode.PercentOutput, -.5);
   }
+  
   public void stopIntake(){
-    IntakeMotor.set(ControlMode.PercentOutput, 0.0);
+    intakeMotor.set(ControlMode.PercentOutput, 0.0);
+  }
+
+  public void raiseIntake(){
+    intakeRetractMotor.set(ControlMode.PercentOutput, .5);
+  }
+
+  public void lowerIntake(){
+    intakeRetractMotor.set(ControlMode.PercentOutput, -.5);
+  }
+
+  public void stopRetract(){
+    intakeRetractMotor.set(ControlMode.PercentOutput, 0.0);
   }
 
   @Override
