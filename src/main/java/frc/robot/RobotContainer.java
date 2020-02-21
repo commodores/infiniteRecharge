@@ -7,6 +7,9 @@ import static edu.wpi.first.wpilibj.XboxController.Button;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.SimpleAuto;
 import frc.robot.subsystems.DriveTrain;
@@ -43,29 +46,41 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
 
-    new JoystickButton(m_driverController, Button.kX.value)
-      .whenPressed(() -> m_turret.turnTurret(.25))
-      .whenReleased(() -> m_turret.stopTurret());
+    new JoystickButton(rightJoystick, 6)
+      .whenPressed(() -> m_lowerChute.ChuteDown())
+      .whenReleased(() -> m_lowerChute.StopChute());
 
-    new JoystickButton(m_driverController, Button.kY.value)
-      .whenPressed(() -> m_turret.turnTurret(-.25))
-      .whenReleased(() -> m_turret.stopTurret());
-       
-    new JoystickButton(m_driverController,Button.kBumperLeft.value)
-      .whenPressed(() -> m_intake.BallIn())
-      .whenReleased(() -> m_intake.stopIntake());
-
-    new JoystickButton(m_driverController, Button.kBumperRight.value)
-      .whenPressed(() -> m_shooter.set(1.0))
-      .whenReleased(() -> m_shooter.stop());
-
-    new JoystickButton(m_driverController, Button.kA.value)
+    new JoystickButton(rightJoystick, 5)
       .whenPressed(() -> m_lowerChute.ChuteUp())
       .whenReleased(() -> m_lowerChute.StopChute());
 
+    new JoystickButton(m_driverController, Button.kBumperRight.value)
+      .whenPressed(() -> m_shooter.set(.97))
+      .whenReleased(() -> m_shooter.stop());
+
+    new JoystickButton(m_driverController, Button.kA.value)
+      .whenPressed(() -> m_upperChute.ChuteUp())
+      .whenReleased(() -> m_upperChute.StopChute());
+
     new JoystickButton(m_driverController, Button.kB.value)
-    .whenPressed(() -> m_upperChute.ChuteUp())
-    .whenReleased(() -> m_upperChute.StopChute());
+      .whenPressed(() -> m_upperChute.ChuteDown())
+      .whenReleased(() -> m_upperChute.StopChute());
+
+    new JoystickButton(rightJoystick, 8)
+      .whenPressed(() -> m_intake.BallOut())
+      .whenReleased(() -> m_intake.stopIntake()); 
+
+    new JoystickButton(rightJoystick, 7)
+        .whenPressed(() -> m_intake.BallIn())
+        .whenReleased(() -> m_intake.stopIntake()); 
+
+    new JoystickButton(rightJoystick, 3)
+        .whenPressed(() -> m_intake.raiseIntake())
+        .whenReleased(() -> m_intake.stopRetract());
+
+    new JoystickButton(rightJoystick, 2)
+      .whenPressed(() -> m_intake.lowerIntake())
+      .whenReleased(() -> m_intake.stopRetract());
 
   }
     

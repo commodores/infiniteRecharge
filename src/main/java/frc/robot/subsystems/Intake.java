@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 
@@ -12,10 +13,12 @@ public class Intake extends SubsystemBase {
 
   private final TalonSRX intakeMotor;
   private final VictorSPX intakeRetractMotor;
+  private DigitalInput limitSwitch;
 
   public Intake() {
     intakeMotor = new TalonSRX(IntakeConstants.kintakeMotorPort);
     intakeRetractMotor = new VictorSPX(IntakeConstants.kintakeRetractPort);
+    limitSwitch = new DigitalInput(IntakeConstants.kintakeLimitPort);
 
     intakeMotor.configFactoryDefault();
     intakeRetractMotor.configFactoryDefault();
@@ -40,15 +43,21 @@ public class Intake extends SubsystemBase {
   }
 
   public void raiseIntake(){
-    intakeRetractMotor.set(ControlMode.PercentOutput, .5);
+    if(getLimitSwitchState()){
+      intakeRetractMotor.set(ControlMode.PercentOutput, -.5);
+    }    
   }
 
   public void lowerIntake(){
-    intakeRetractMotor.set(ControlMode.PercentOutput, -.5);
+    intakeRetractMotor.set(ControlMode.PercentOutput, .5);
   }
 
   public void stopRetract(){
     intakeRetractMotor.set(ControlMode.PercentOutput, 0.0);
+  }
+
+  public boolean getLimitSwitchState() {
+    return limitSwitch.get();
   }
 
   @Override

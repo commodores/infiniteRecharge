@@ -9,16 +9,17 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Turret;
 
-public class DriveManual extends CommandBase {
-  private final DriveTrain m_drivetrain;
+public class TurretManual extends CommandBase {
+  private final Turret m_turret;
   /**
-   * Creates a new DriveManual.
+   * Creates a new TurretManual.
    */
-  public DriveManual(DriveTrain m_drivetrain) {
-    this.m_drivetrain = m_drivetrain;
-    addRequirements(m_drivetrain);
+  public TurretManual(Turret m_turret) {
+    this.m_turret = m_turret;
+    addRequirements(m_turret);
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -29,22 +30,18 @@ public class DriveManual extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    double speed = RobotContainer.m_driverController.getRawAxis(3) - RobotContainer.m_driverController.getRawAxis(2);
-    double rotation = -RobotContainer.m_driverController.getRawAxis(0);
-    boolean quickTurn = speed > -0.2 && speed < 0.2;
-
+    double speed = -RobotContainer.m_driverController.getRawAxis(4); 
+    /*double rotation = -RobotContainer.m_driverController.getRawAxis(4);
+    if( rotation > -0.1 && rotation < 0.1){
+      rotation = 0;
+    }
+   */ 
     if( speed > -0.1 && speed < 0.1){
       speed = 0;
     }
 
-    if( rotation > -0.1 && rotation < 0.1){
-      rotation = 0;
-    }
-    
-    m_drivetrain.curvatureDrive(speed, rotation, quickTurn);
+    m_turret.turnTurret(speed);
 
-    //m_drivetrain.tankDrive(RobotContainer.m_driverController.getRawAxis(1), RobotContainer.m_driverController.getRawAxis(5));
   }
 
   // Called once the command ends or is interrupted.

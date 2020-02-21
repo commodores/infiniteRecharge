@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -54,6 +55,9 @@ public class DriveTrain extends SubsystemBase {
     leftEncoder.setPosition(0);
     rightEncoder.setPosition(0);
 
+    rightMaster.setIdleMode(IdleMode.kBrake);
+    leftMaster.setIdleMode(IdleMode.kBrake);
+    
     m_drive.setSafetyEnabled(false);
 
     resetEncoders();
