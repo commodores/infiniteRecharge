@@ -69,8 +69,20 @@ public class RobotContainer {
       .whenReleased(() -> m_lowerChute.StopChute());
 
     new JoystickButton(m_driverController, Button.kBumperRight.value)
-      .whenPressed(() -> m_shooter.set(.98))
+      .whenPressed(() -> m_shooter.set(.90))
       .whenReleased(() -> m_shooter.stop());
+
+    new JoystickButton(rightJoystick, 1)
+      .whenPressed(() -> m_shooter.set(.65))
+      .whenReleased(() -> m_shooter.stop());
+
+    new JoystickButton(rightJoystick, 2)
+    .whenPressed(() -> m_upperChute.ChuteUp())
+    .whenReleased(() -> m_upperChute.StopChute());
+
+    new JoystickButton(rightJoystick, 3)
+      .whenPressed(() -> m_upperChute.ChuteDown())
+      .whenReleased(() -> m_upperChute.StopChute());
 
     new JoystickButton(m_driverController, Button.kA.value)
       .whenPressed(() -> m_upperChute.ChuteUp())

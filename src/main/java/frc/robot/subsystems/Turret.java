@@ -33,6 +33,7 @@ public class Turret extends SubsystemBase {
     setDefaultCommand(new TurretManual(this));
   }
 
+
   public void turnTurret(double speed){
     turretMotor.set(ControlMode.PercentOutput, speed);
   }
