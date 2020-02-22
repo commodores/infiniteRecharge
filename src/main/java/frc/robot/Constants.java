@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.util.Units;
 
 public final class Constants {
@@ -13,12 +14,29 @@ public final class Constants {
 
     public static final int kPigeonPort = 9;
 
-    public static final double drivetrainWidth = Units.inchesToMeters(29);
     public static final double drivetrainEncoderConversionFactor = Units.inchesToMeters(6 * Math.PI) / 13;
 
     public static final double joystickSpeedConstant = 1.2;
     public static final double joystickTurnConstant = 1.4;
     public static final double minimumJoystickInput = 0.1;
+
+    public static final double ksVolts = 0.188;
+    public static final double kvVoltSecondsPerMeter = 3.51;
+    public static final double kaVoltSecondsSquaredPerMeter = 0.497;
+
+    // Example value only - as above, this must be tuned for your drive!
+    public static final double kPDriveVel = 16;
+
+    public static final double kTrackwidthMeters = 0.63;
+    public static final DifferentialDriveKinematics kDriveKinematics =
+        new DifferentialDriveKinematics(kTrackwidthMeters);
+
+    public static final double kMaxSpeedMetersPerSecond = 3;
+    public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+
+    // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
+    public static final double kRamseteB = 2;
+    public static final double kRamseteZeta = 0.7;
   }
 
   public static final class OIConstants {

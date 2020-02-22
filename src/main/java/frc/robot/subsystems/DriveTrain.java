@@ -31,11 +31,9 @@ public class DriveTrain extends SubsystemBase {
   PigeonIMU pigeon = new PigeonIMU(DriveConstants.kPigeonPort);
 
   DifferentialDrive m_drive = new DifferentialDrive(leftMaster, rightMaster);
-
+  
   private double[] yawPitchRoll = new double[3];
   private double[] xyz_dps = new double[3];
-
-  private DifferentialDriveKinematics driveKinematics = new DifferentialDriveKinematics(DriveConstants.drivetrainWidth);
 
   private final DifferentialDriveOdometry m_odometry;
     
@@ -57,6 +55,9 @@ public class DriveTrain extends SubsystemBase {
 
     rightMaster.setIdleMode(IdleMode.kBrake);
     leftMaster.setIdleMode(IdleMode.kBrake);
+
+    leftMaster.setInverted(true);
+    m_drive.setRightSideInverted(false);
     
     m_drive.setSafetyEnabled(false);
 
@@ -76,7 +77,7 @@ public class DriveTrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    m_odometry.update(getIMUHeading(), getLeftSpeed(), getRightSpeed());
+    m_odometry.update(getIMUHeading(), getLeftEncoder(), getRightEncoder());
   }
 
   public void arcadeDrive(double moveSpeed, double rotateSpeed)
@@ -97,10 +98,6 @@ public class DriveTrain extends SubsystemBase {
     leftMaster.setVoltage(leftVolts);
     rightMaster.setVoltage(-rightVolts);
     m_drive.feed();
-  }
-
-  public DifferentialDriveKinematics getKinematics() {
-    return driveKinematics;
   }
 
 
@@ -147,6 +144,10 @@ public class DriveTrain extends SubsystemBase {
     return rightEncoder.getVelocity();
   }
 
+  public void setMaxOutput(double maxOutput){
+    m_drive.setMaxOutput(maxOutput);
+  }
+  
   public Rotation2d getIMUHeading() {
         pigeon.getYawPitchRoll(yawPitchRoll);
         SmartDashboard.putString("YawPitchRoll", "[0]: "+yawPitchRoll[0]+"; [1]: "+yawPitchRoll[1]+"; [2]: "+yawPitchRoll[2]+"; Fused: "+pigeon.getFusedHeading());

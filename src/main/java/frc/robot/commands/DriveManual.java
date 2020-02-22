@@ -31,7 +31,7 @@ public class DriveManual extends CommandBase {
   public void execute() {
 
     double speed = RobotContainer.m_driverController.getRawAxis(3) - RobotContainer.m_driverController.getRawAxis(2);
-    double rotation = -RobotContainer.m_driverController.getRawAxis(0);
+    double rotation = RobotContainer.m_driverController.getRawAxis(0);
     boolean quickTurn = speed > -0.2 && speed < 0.2;
 
     if( speed > -0.1 && speed < 0.1){
@@ -42,7 +42,7 @@ public class DriveManual extends CommandBase {
       rotation = 0;
     }
     
-    m_drivetrain.curvatureDrive(speed, rotation, quickTurn);
+    m_drivetrain.curvatureDrive(-speed, rotation, quickTurn);
 
     //m_drivetrain.tankDrive(RobotContainer.m_driverController.getRawAxis(1), RobotContainer.m_driverController.getRawAxis(5));
   }
