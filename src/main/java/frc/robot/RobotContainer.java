@@ -34,13 +34,15 @@ import frc.robot.subsystems.RightElevator;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.UpperChute;
+import frc.robot.subsystems.VelocityShooter;
 
 
 public class RobotContainer {
   public static final DriveTrain m_drivetrain = new DriveTrain();
   private final Turret m_turret = new Turret();
   private final Intake m_intake = new Intake();
-  private final Shooter m_shooter = new Shooter();
+  //private final Shooter m_shooter = new Shooter();
+  private final VelocityShooter m_shooter = new VelocityShooter();
   private final UpperChute m_upperChute = new UpperChute();
   private final LowerChute m_lowerChute = new LowerChute();
   private final LeftElevator m_leftElevator = new LeftElevator();
@@ -69,13 +71,17 @@ public class RobotContainer {
       .whenReleased(() -> m_lowerChute.StopChute());
 
     new JoystickButton(m_driverController, Button.kBumperRight.value)
+      .whenPressed(() -> m_shooter.shoot())
+      .whenReleased(() -> m_shooter.stopShooter());
+/*
+    new JoystickButton(m_driverController, Button.kBumperRight.value)
       .whenPressed(() -> m_shooter.set(.90))
       .whenReleased(() -> m_shooter.stop());
 
     new JoystickButton(rightJoystick, 1)
       .whenPressed(() -> m_shooter.set(.65))
       .whenReleased(() -> m_shooter.stop());
-
+*/
     new JoystickButton(rightJoystick, 2)
     .whenPressed(() -> m_upperChute.ChuteUp())
     .whenReleased(() -> m_upperChute.StopChute());
