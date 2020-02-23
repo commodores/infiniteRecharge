@@ -9,32 +9,32 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  */
 public class AimTurret extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Turret turret;
-  private final LimeLight limelight;
+  private final Turret m_turret;
+  private final LimeLight m_limelight;
   
 
   public AimTurret(Turret turret, LimeLight limelight) {
-    this.turret = turret;
-    this.limelight = limelight;
+    this.m_turret = turret;
+    this.m_limelight = limelight;
 
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    limelight.setPipeline(0);
+    m_limelight.setPipeline(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    limelight.setPipeline(0);
+    m_limelight.setPipeline(0);
    // limelight.setLedMode(0);
-      if(limelight.getX()>=3){
-        turret.turnTurret(-.25);
+      if(m_limelight.getX()>=3){
+        m_turret.turnTurret(-.25);
       }
-      if(limelight.getX()<=-3){
-        turret.turnTurret(.25);
+      if(m_limelight.getX()<=-3){
+        m_turret.turnTurret(.25);
       }
 
     //move it the direction of the target
@@ -44,8 +44,9 @@ public class AimTurret extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    turret.turnTurret(0);
-    limelight.setPipeline(1);
+    m_turret.turnTurret(0);
+    m_limelight.setPipeline(1);
+    m_limelight.setLedMode(0);
     //set turret to 0 - stop moving
 
   }
@@ -53,7 +54,7 @@ public class AimTurret extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(limelight.getX()<=1 && limelight.getX()>=-1){
+    if(m_limelight.getX()<=1 && m_limelight.getX()>=-1){
       return true;
     }
     return false;

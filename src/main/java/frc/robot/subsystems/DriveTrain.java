@@ -34,6 +34,8 @@ public class DriveTrain extends SubsystemBase {
   
   private double[] yawPitchRoll = new double[3];
   private double[] xyz_dps = new double[3];
+  PigeonIMU.GeneralStatus genStatus = new PigeonIMU.GeneralStatus();
+	PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
 
   private final DifferentialDriveOdometry m_odometry;
     
@@ -158,6 +160,11 @@ public class DriveTrain extends SubsystemBase {
     pigeon.getRawGyro(xyz_dps);
     double angleRate = xyz_dps[2];
     return angleRate;
+  }
+
+  public double getCurrentAngle() {
+    pigeon.getFusedHeading(fusionStatus);
+    return fusionStatus.heading;
   }
   
 }

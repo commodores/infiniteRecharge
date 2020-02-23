@@ -2,36 +2,22 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.controller.RamseteController;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import static edu.wpi.first.wpilibj.XboxController.Button;
 
-import java.util.List;
-
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import frc.robot.Constants.DriveConstants;
+
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.SimpleAuto;
+import frc.robot.commands.AutoDrive;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LeftElevator;
+import frc.robot.subsystems.LimeLight;
 import frc.robot.subsystems.LowerChute;
 import frc.robot.subsystems.RightElevator;
-import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.UpperChute;
 import frc.robot.subsystems.VelocityShooter;
@@ -47,16 +33,27 @@ public class RobotContainer {
   private final LowerChute m_lowerChute = new LowerChute();
   private final LeftElevator m_leftElevator = new LeftElevator();
   private final RightElevator m_rightElevator = new RightElevator();
+  private final LimeLight m_limelight = new LimeLight();
   
-  private final SimpleAuto m_autoCommand = new SimpleAuto();
-
   public static final XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
   public static final Joystick leftJoystick = new Joystick(OIConstants.kLeftJoystickPort);
   public static final Joystick rightJoystick = new Joystick(OIConstants.kRightJoystickPort);
   
+  /**
+   * Instantiation of autonomous chooser.
+   * Allows operators to preselect which autonomous command to run during autonomous period.
+   */
+  private final SendableChooser<String> m_autoChooser = new SendableChooser<>();
+
   public RobotContainer() {
 
     configureButtonBindings();
+
+     /* Initialize various systems on robotInit. */
+     this.initializeStartup();
+
+     /* Initialize autonomous command chooser and display on the SmartDashboard. */
+     this.initializeAutoChooser();
               
   }
 
@@ -115,65 +112,49 @@ public class RobotContainer {
       .whenReleased(() -> m_intake.stopRetract());
 */
   }
-    
+  /**
+   * Various methods to run when robot is initialized.
+   * Cannot put these in robotInit() in Robot.java because subsystems may not be instantiated at that point.
+   */
+  private void initializeStartup()
+  {
+    /* Turn off Limelight LED when first started up so it doesn't blind drive team. */
+    m_limelight.setLedMode(0);
+  }
+  /**
+   * Set options for autonomous command chooser and display them for selection on the SmartDashboard.
+   * Using string chooser rather than command chooser because if using a command chooser, will instantiate
+   * all the autonomous commands. This may cause problems (e.g. initial trajectory position is from a
+   * different command's path).
+   */
+  private void initializeAutoChooser()
+  {
+    /* Add options (which autonomous commands can be selected) to chooser. */
+    m_autoChooser.setDefaultOption("Drive off line", "driveOffLine");
+    m_autoChooser.addOption("Three Ball", "threeBall");
+    m_autoChooser.addOption("Six Ball", "sixBall");
+
+    /* Display chooser on SmartDashboard for operators to select which autonomous command to run during the auto period. */
+    SmartDashboard.putData("Autonomous Command", m_autoChooser);
+  }  
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-
-    // Create a voltage constraint to ensure we don't accelerate too fast
-    var autoVoltageConstraint =
-        new DifferentialDriveVoltageConstraint(
-            new SimpleMotorFeedforward(DriveConstants.ksVolts,
-                                       DriveConstants.kvVoltSecondsPerMeter,
-                                       DriveConstants.kaVoltSecondsSquaredPerMeter),
-            DriveConstants.kDriveKinematics,
-            10);
-
-    // Create config for trajectory
-    TrajectoryConfig config =
-        new TrajectoryConfig(DriveConstants.kMaxSpeedMetersPerSecond,
-                             DriveConstants.kMaxAccelerationMetersPerSecondSquared)
-            // Add kinematics to ensure max speed is actually obeyed
-            .setKinematics(DriveConstants.kDriveKinematics)
-            // Apply the voltage constraint
-            .addConstraint(autoVoltageConstraint);
-
-    // An example trajectory to follow.  All units in meters.
-    Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-        // Start at the origin facing the +X direction
-        new Pose2d(0, 0, new Rotation2d(0)),
-        // Pass through these two interior waypoints, making an 's' curve path
-        List.of(
-            new Translation2d(1, 1),
-            new Translation2d(2, -1)
-        ),
-        // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(3, 0, new Rotation2d(0)),
-        // Pass config
-        config
-    );
-
-    RamseteCommand ramseteCommand = new RamseteCommand(
-        exampleTrajectory,
-        m_drivetrain::getPose,
-        new RamseteController(DriveConstants.kRamseteB, DriveConstants.kRamseteZeta),
-        new SimpleMotorFeedforward(DriveConstants.ksVolts,
-                                   DriveConstants.kvVoltSecondsPerMeter,
-                                   DriveConstants.kaVoltSecondsSquaredPerMeter),
-        DriveConstants.kDriveKinematics,
-        m_drivetrain::getWheelSpeeds,
-        new PIDController(DriveConstants.kPDriveVel, 0, 0),
-        new PIDController(DriveConstants.kPDriveVel, 0, 0),
-        // RamseteCommand passes volts to the callback
-        m_drivetrain::tankDriveVolts,
-        m_drivetrain
-    );
-
-    // Run path following command, then stop at the end.
-    return ramseteCommand.andThen(() -> m_drivetrain.tankDriveVolts(0, 0));
+    switch (m_autoChooser.getSelected())
+    {
+      case "driveOffLine":
+        return new AutoDrive(3, 5);
+      case "threeBall":
+        return new AutoDrive(3, 5);
+      case "sixBall":
+        return new AutoDrive(3, 5);
+      default:
+        System.out.println("\nError selecting autonomous command:\nCommand selected: " + m_autoChooser.getSelected() + "\n");
+        return null;
+    }    
   }
 
 }

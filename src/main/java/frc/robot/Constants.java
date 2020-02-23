@@ -14,6 +14,9 @@ public final class Constants {
 
     public static final int kPigeonPort = 9;
 
+    public static final double kAutoSpeed = .5;
+    public static final double kDriveTrainGain = .015;
+
     public static final double drivetrainEncoderConversionFactor = Units.inchesToMeters(6 * Math.PI) / 13;
 
     public static final double joystickSpeedConstant = 1.2;
