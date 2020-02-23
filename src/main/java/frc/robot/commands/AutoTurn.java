@@ -11,17 +11,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveConstants;
 
-public class AutoDrive extends CommandBase {
-  private double distance;
+public class AutoTurn extends CommandBase {
+  private double degrees;
   private double timeOut;
   private double currentHeading;
   /**
-   * Creates a new AutoDrive.
+   * Creates a new AutoTurn.
    */
-  public AutoDrive(double getDistance, double getTimeOut) {
+  public AutoTurn(double getDegrees, double getTimeOut) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_drivetrain);
-    distance = getDistance;
+    degrees = getDegrees;
     timeOut = getTimeOut;
 
     withTimeout(timeOut);
@@ -37,14 +37,10 @@ public class AutoDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(distance > 0){
-      //drive forward
-      double pTerm = DriveConstants.kDriveTrainGain * (currentHeading - RobotContainer.m_drivetrain.getCurrentAngle());
-      RobotContainer.m_drivetrain.tankDrive(-DriveConstants.kAutoSpeed - pTerm, -DriveConstants.kAutoSpeed + pTerm);
+    if(degrees > 0){
+      RobotContainer.m_drivetrain.tankDrive(-DriveConstants.kAutoSpeed, DriveConstants.kAutoSpeed);
     } else {
-      //drive reverse
-      double pTerm = DriveConstants.kDriveTrainGain * (currentHeading + RobotContainer.m_drivetrain.getCurrentAngle());
-      RobotContainer.m_drivetrain.tankDrive(DriveConstants.kAutoSpeed + pTerm, DriveConstants.kAutoSpeed - pTerm);
+      RobotContainer.m_drivetrain.tankDrive(DriveConstants.kAutoSpeed, -DriveConstants.kAutoSpeed);
     }
   }
 
@@ -57,12 +53,12 @@ public class AutoDrive extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(distance > 0){
-      //forward
-      return RobotContainer.m_drivetrain.getAverageDistance() > distance;
+    if(degrees > 0){
+      //turn right
+      return currentHeading - RobotContainer.m_drivetrain.getCurrentAngle() > degrees;
     } else {
-      //reverse
-      return RobotContainer.m_drivetrain.getAverageDistance() < distance;
+      //turn left
+      return currentHeading + RobotContainer.m_drivetrain.getCurrentAngle() < degrees;
     }
   }
 }

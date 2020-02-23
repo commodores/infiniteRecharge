@@ -11,7 +11,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.AimTurret;
 import frc.robot.commands.AutoDrive;
+import frc.robot.commands.AutoTurn;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LeftElevator;
@@ -67,9 +69,13 @@ public class RobotContainer {
       .whenPressed(() -> m_lowerChute.ChuteUp())
       .whenReleased(() -> m_lowerChute.StopChute());
 
+//Test these
     new JoystickButton(m_driverController, Button.kBumperRight.value)
       .whenPressed(() -> m_shooter.shoot())
       .whenReleased(() -> m_shooter.stopShooter());
+
+    new JoystickButton(rightJoystick, 1)
+      .whenPressed(new AimTurret(m_turret, m_limelight));
 /*
     new JoystickButton(m_driverController, Button.kBumperRight.value)
       .whenPressed(() -> m_shooter.set(.90))
@@ -130,9 +136,12 @@ public class RobotContainer {
   private void initializeAutoChooser()
   {
     /* Add options (which autonomous commands can be selected) to chooser. */
-    m_autoChooser.setDefaultOption("Drive off line", "driveOffLine");
-    m_autoChooser.addOption("Three Ball", "threeBall");
-    m_autoChooser.addOption("Six Ball", "sixBall");
+    m_autoChooser.setDefaultOption("Drive foward 3 Meters", "forward3");
+    m_autoChooser.addOption("Drive reverse 3 Meters", "reverse3");
+    m_autoChooser.addOption("Turn right 90 Degrees", "turnRight");
+    m_autoChooser.addOption("Turn left 90 Degrees", "turnLeft");
+    //m_autoChooser.addOption("Three Ball", "threeBall");
+    //m_autoChooser.addOption("Six Ball", "sixBall");
 
     /* Display chooser on SmartDashboard for operators to select which autonomous command to run during the auto period. */
     SmartDashboard.putData("Autonomous Command", m_autoChooser);
@@ -145,12 +154,14 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     switch (m_autoChooser.getSelected())
     {
-      case "driveOffLine":
+      case "forward3":
         return new AutoDrive(3, 5);
-      case "threeBall":
-        return new AutoDrive(3, 5);
-      case "sixBall":
-        return new AutoDrive(3, 5);
+      case "reverse3":
+        return new AutoDrive(-3, 5);
+      case "turnRight":
+        return new AutoTurn(90, 5);
+      case "turnLeft":
+        return new AutoTurn(-90, 5);
       default:
         System.out.println("\nError selecting autonomous command:\nCommand selected: " + m_autoChooser.getSelected() + "\n");
         return null;

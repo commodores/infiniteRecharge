@@ -17,38 +17,33 @@ public class AimTurret extends CommandBase {
     this.m_turret = turret;
     this.m_limelight = limelight;
 
+    withTimeout(3.0);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     m_limelight.setPipeline(0);
+    m_limelight.setLedMode(2);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     m_limelight.setPipeline(0);
-   // limelight.setLedMode(0);
-      if(m_limelight.getX()>=3){
-        m_turret.turnTurret(-.25);
-      }
-      if(m_limelight.getX()<=-3){
-        m_turret.turnTurret(.25);
-      }
-
-    //move it the direction of the target
-
+    if(m_limelight.getX()>=3){
+      m_turret.turnTurret(-.25);
+    }
+    if(m_limelight.getX()<=-3){
+      m_turret.turnTurret(.25);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     m_turret.turnTurret(0);
-    m_limelight.setPipeline(1);
     m_limelight.setLedMode(0);
-    //set turret to 0 - stop moving
-
   }
 
   // Returns true when the command should end.
