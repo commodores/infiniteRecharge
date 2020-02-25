@@ -23,8 +23,6 @@ public class AutoTurn extends CommandBase {
     addRequirements(RobotContainer.m_drivetrain);
     degrees = getDegrees;
     timeOut = getTimeOut;
-
-    withTimeout(timeOut);
   }
 
   // Called when the command is initially scheduled.

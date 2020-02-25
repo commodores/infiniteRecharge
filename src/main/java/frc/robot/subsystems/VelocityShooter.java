@@ -29,7 +29,7 @@ public class VelocityShooter extends SubsystemBase {
   /**
    * The target velocity of the NEO Brushless Motor.
    */
-  private double shooterSetpoint = 2000;
+  private double shooterSetpoint = 3750;
   /**
    * The Proportial Gain of the SparkMAX PIDF controller The weight of the
    * proportional path against the differential and integral paths is controlled
@@ -57,7 +57,7 @@ public class VelocityShooter extends SubsystemBase {
    * The Feed-Forward Gain of the SparkMAX PIDF controller. The weight of the
    * feed-forward loop as compared to the PID loop is controlled by this value.
    */
-  private final double kFF = 0.000015;
+  private final double kFF = 0.000182;
   /**
    * Scales the output of the SparkMAX PIDF controller.
    */
@@ -98,8 +98,8 @@ public class VelocityShooter extends SubsystemBase {
    * Passes a preset velocity to the SparkMAX PIDF controller and lets it manage
    * the NEO's velocity. Intended to be called when a button is pressed.
    */
-  public void shoot() {
-    shooterPIDLeft.setReference(shooterSetpoint, ControlType.kVelocity);
+  public void shoot(double setPoint) {
+    shooterPIDLeft.setReference(setPoint, ControlType.kVelocity);
   }
 
   /**
@@ -113,6 +113,8 @@ public class VelocityShooter extends SubsystemBase {
   public void setSetpoint(double newPoint) {
     shooterSetpoint = newPoint;
   }
+
+
 
   @Override
   public void periodic() {

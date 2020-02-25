@@ -16,8 +16,6 @@ public class AimTurret extends CommandBase {
   public AimTurret(Turret turret, LimeLight limelight) {
     this.m_turret = turret;
     this.m_limelight = limelight;
-
-    withTimeout(3.0);
   }
 
   // Called when the command is initially scheduled.

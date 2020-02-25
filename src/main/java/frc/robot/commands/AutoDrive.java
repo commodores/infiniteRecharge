@@ -23,8 +23,6 @@ public class AutoDrive extends CommandBase {
     addRequirements(RobotContainer.m_drivetrain);
     distance = getDistance;
     timeOut = getTimeOut;
-
-    withTimeout(timeOut);
   }
 
   // Called when the command is initially scheduled.

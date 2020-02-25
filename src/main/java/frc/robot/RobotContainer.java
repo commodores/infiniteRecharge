@@ -14,6 +14,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.AimTurret;
 import frc.robot.commands.AutoDrive;
 import frc.robot.commands.AutoTurn;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LeftElevator;
@@ -27,6 +28,7 @@ import frc.robot.subsystems.VelocityShooter;
 
 public class RobotContainer {
   public static final DriveTrain m_drivetrain = new DriveTrain();
+  public static final Arm m_arm = new Arm();
   private final Turret m_turret = new Turret();
   private final Intake m_intake = new Intake();
   //private final Shooter m_shooter = new Shooter();
@@ -71,7 +73,15 @@ public class RobotContainer {
 
 //Test these
     new JoystickButton(m_driverController, Button.kBumperRight.value)
-      .whenPressed(() -> m_shooter.shoot())
+      .whenPressed(() -> m_shooter.shoot(5400))
+      .whenReleased(() -> m_shooter.stopShooter());
+
+    new JoystickButton(m_driverController, Button.kX.value)
+      .whenPressed(() -> m_shooter.shoot(4600))
+      .whenReleased(() -> m_shooter.stopShooter());
+      
+    new JoystickButton(m_driverController, Button.kY.value)
+      .whenPressed(() -> m_shooter.shoot(3750))
       .whenReleased(() -> m_shooter.stopShooter());
 
     new JoystickButton(rightJoystick, 1)
@@ -107,16 +117,11 @@ public class RobotContainer {
 
     new JoystickButton(rightJoystick, 7)
         .whenPressed(() -> m_intake.BallIn())
-        .whenReleased(() -> m_intake.stopIntake()); 
-/*
-    new JoystickButton(rightJoystick, 3)
-        .whenPressed(() -> m_intake.raiseIntake())
-        .whenReleased(() -> m_intake.stopRetract());
-
-    new JoystickButton(rightJoystick, 2)
-      .whenPressed(() -> m_intake.lowerIntake())
-      .whenReleased(() -> m_intake.stopRetract());
-*/
+        .whenReleased(() -> m_intake.stopIntake());
+    
+    new JoystickButton(rightJoystick, 4)
+      .whenPressed(() -> m_arm.setArmPosition());
+    
   }
   /**
    * Various methods to run when robot is initialized.

@@ -56,6 +56,10 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
+    SmartDashboard.putNumber("Left Encoder", m_robotContainer.m_drivetrain.getLeftEncoder());
+    SmartDashboard.putNumber("Right Encoder", m_robotContainer.m_drivetrain.getRightEncoder());
+    SmartDashboard.putNumber("Arm Encoder", m_robotContainer.m_arm.getArmPostion());
   }
 
   /**
@@ -105,8 +109,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    SmartDashboard.putNumber("Left Encoder", m_robotContainer.m_drivetrain.getLeftEncoder());
-    SmartDashboard.putNumber("Right Encoder", m_robotContainer.m_drivetrain.getRightEncoder());
+    
   }
 
   @Override
