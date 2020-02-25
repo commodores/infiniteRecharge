@@ -60,6 +60,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Left Encoder", m_robotContainer.m_drivetrain.getLeftEncoder());
     SmartDashboard.putNumber("Right Encoder", m_robotContainer.m_drivetrain.getRightEncoder());
     SmartDashboard.putNumber("Arm Encoder", m_robotContainer.m_arm.getArmPostion());
+    SmartDashboard.putNumber("Arm Initial Position", m_robotContainer.m_arm.getInitPosition());
   }
 
   /**

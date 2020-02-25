@@ -13,16 +13,14 @@ import frc.robot.Constants.DriveConstants;
 
 public class AutoTurn extends CommandBase {
   private double degrees;
-  private double timeOut;
   private double currentHeading;
   /**
    * Creates a new AutoTurn.
    */
-  public AutoTurn(double getDegrees, double getTimeOut) {
+  public AutoTurn(double getDegrees) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_drivetrain);
     degrees = getDegrees;
-    timeOut = getTimeOut;
   }
 
   // Called when the command is initially scheduled.
@@ -36,9 +34,9 @@ public class AutoTurn extends CommandBase {
   @Override
   public void execute() {
     if(degrees > 0){
-      RobotContainer.m_drivetrain.tankDrive(-DriveConstants.kAutoSpeed, DriveConstants.kAutoSpeed);
-    } else {
       RobotContainer.m_drivetrain.tankDrive(DriveConstants.kAutoSpeed, -DriveConstants.kAutoSpeed);
+    } else {
+      RobotContainer.m_drivetrain.tankDrive(-DriveConstants.kAutoSpeed, DriveConstants.kAutoSpeed);
     }
   }
 
@@ -56,7 +54,7 @@ public class AutoTurn extends CommandBase {
       return currentHeading - RobotContainer.m_drivetrain.getCurrentAngle() > degrees;
     } else {
       //turn left
-      return currentHeading + RobotContainer.m_drivetrain.getCurrentAngle() < degrees;
+      return currentHeading - RobotContainer.m_drivetrain.getCurrentAngle() < degrees;
     }
   }
 }

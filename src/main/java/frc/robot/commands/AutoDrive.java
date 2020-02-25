@@ -13,16 +13,14 @@ import frc.robot.Constants.DriveConstants;
 
 public class AutoDrive extends CommandBase {
   private double distance;
-  private double timeOut;
   private double currentHeading;
   /**
    * Creates a new AutoDrive.
    */
-  public AutoDrive(double getDistance, double getTimeOut) {
+  public AutoDrive(double getDistance) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.m_drivetrain);
     distance = getDistance;
-    timeOut = getTimeOut;
   }
 
   // Called when the command is initially scheduled.
@@ -38,11 +36,11 @@ public class AutoDrive extends CommandBase {
     if(distance > 0){
       //drive forward
       double pTerm = DriveConstants.kDriveTrainGain * (currentHeading - RobotContainer.m_drivetrain.getCurrentAngle());
-      RobotContainer.m_drivetrain.tankDrive(-DriveConstants.kAutoSpeed - pTerm, -DriveConstants.kAutoSpeed + pTerm);
+      RobotContainer.m_drivetrain.tankDrive(DriveConstants.kAutoSpeed + pTerm, DriveConstants.kAutoSpeed - pTerm);
     } else {
       //drive reverse
-      double pTerm = DriveConstants.kDriveTrainGain * (currentHeading + RobotContainer.m_drivetrain.getCurrentAngle());
-      RobotContainer.m_drivetrain.tankDrive(DriveConstants.kAutoSpeed + pTerm, DriveConstants.kAutoSpeed - pTerm);
+      double pTerm = DriveConstants.kDriveTrainGain * (currentHeading - RobotContainer.m_drivetrain.getCurrentAngle());
+      RobotContainer.m_drivetrain.tankDrive(-DriveConstants.kAutoSpeed + pTerm, -DriveConstants.kAutoSpeed - pTerm);
     }
   }
 

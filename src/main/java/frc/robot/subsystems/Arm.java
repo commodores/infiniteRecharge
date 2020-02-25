@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -19,25 +20,46 @@ import frc.robot.Constants.ArmConstants;
 public class Arm extends SubsystemBase {
 
   private final TalonSRX armMotor;
+  private final double feedFwdTerm = .00001;
+  private int initPosition;
 
   public Arm() {
         
     armMotor = new TalonSRX(ArmConstants.kArmPort);
 
-    int absolutePosition = 0;
-    armMotor.configNeutralDeadband(0.001, 10); 
-    armMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute); 
-    absolutePosition = armMotor.getSensorCollection().getPulseWidthPosition(); 
-    armMotor.getSensorCollection().setQuadraturePosition(absolutePosition, 0); 
-    armMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    armMotor.configFactoryDefault();
 
-    armMotor.setSensorPhase(false);
+    armMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
 
-    armMotor.config_kP(0, 0.85);
-    armMotor.config_kI(0, 0.002);
-    armMotor.config_kD(0, 0.0);
-    armMotor.config_kF(0, .5);  
+    armMotor.setSensorPhase(true);
+    armMotor.setInverted(false);
 
+    armMotor.setNeutralMode(NeutralMode.Brake);
+
+    armMotor.configAllowableClosedloopError(0, 25, 300);
+        
+    //int absolutePosition = armMotor.getSensorCollection().getPulseWidthPosition();
+    //absolutePosition &= 0xFFF;
+    //armMotor.setSelectedSensorPosition(absolutePosition);
+
+    armMotor.selectProfileSlot(0, 0);
+    armMotor.config_kF(0, .0, 10);
+    armMotor.config_kP(0, .2, 10);
+    armMotor.config_kI(0, 0.00015, 10);
+    armMotor.config_kD(0, 0, 10);
+
+    armMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 0);
+    armMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 0);
+
+    armMotor.configNominalOutputForward(0, 10);
+    armMotor.configNominalOutputReverse(0, 10);
+    armMotor.configPeakOutputForward(1, 10);
+    armMotor.configPeakOutputReverse(-1, 10);
+
+    armMotor.configMotionAcceleration(2052, 10);
+    armMotor.configMotionCruiseVelocity(1056, 10);
+
+    initPosition = armMotor.getSelectedSensorPosition();
     
   }
 
@@ -45,11 +67,30 @@ public class Arm extends SubsystemBase {
     return armMotor.getSelectedSensorPosition();
   }
 
-  public void setArmPosition(){
-    armMotor.set(ControlMode.PercentOutput, .5);
+  public void motionMagic(double pos){
+    //armMotor.set(ControlMode.MotionMagic, pos, DemandType.ArbitraryFeedForward, feedFwdTerm);
+    armMotor.set(ControlMode.MotionMagic, pos);
   }
 
-  
+  public void armUp(){
+    armMotor.set(ControlMode.MotionMagic, initPosition);
+  }
+
+  public void armDown(){
+    armMotor.set(ControlMode.MotionMagic, initPosition - 3900);
+  }
+
+  public void armManual(double speed){
+    armMotor.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void armStop(){
+    armMotor.set(ControlMode.PercentOutput, 0.0);
+  }
+
+  public int getInitPosition(){
+    return initPosition;
+  }
   
 
   @Override

@@ -120,7 +120,12 @@ public class RobotContainer {
         .whenReleased(() -> m_intake.stopIntake());
     
     new JoystickButton(rightJoystick, 4)
-      .whenPressed(() -> m_arm.setArmPosition());
+      .whenPressed(() -> m_arm.armUp());
+      //.whenReleased(() -> m_arm.armStop());
+
+    new JoystickButton(rightJoystick, 9)
+    .whenPressed(() -> m_arm.armDown());
+    //.whenReleased(() -> m_arm.armStop());
     
   }
   /**
@@ -160,13 +165,17 @@ public class RobotContainer {
     switch (m_autoChooser.getSelected())
     {
       case "forward3":
-        return new AutoDrive(3, 5);
+        return new AutoDrive(3)
+        .withTimeout(5);
       case "reverse3":
-        return new AutoDrive(-3, 5);
+        return new AutoDrive(-3)
+        .withTimeout(5);
       case "turnRight":
-        return new AutoTurn(90, 5);
+        return new AutoTurn(90)
+        .withTimeout(5);
       case "turnLeft":
-        return new AutoTurn(-90, 5);
+        return new AutoTurn(-90)
+        .withTimeout(5);
       default:
         System.out.println("\nError selecting autonomous command:\nCommand selected: " + m_autoChooser.getSelected() + "\n");
         return null;
