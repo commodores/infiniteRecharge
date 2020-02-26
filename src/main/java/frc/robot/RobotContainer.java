@@ -9,11 +9,12 @@ import static edu.wpi.first.wpilibj.XboxController.Button;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
-
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.AimTurret;
 import frc.robot.commands.AutoDrive;
 import frc.robot.commands.AutoTurn;
+import frc.robot.commands.ShootAuto;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
@@ -146,6 +147,7 @@ public class RobotContainer {
   private void initializeAutoChooser()
   {
     /* Add options (which autonomous commands can be selected) to chooser. */
+    m_autoChooser.setDefaultOption("Choot 'em'", "shoot");
     m_autoChooser.setDefaultOption("Drive foward 3 Meters", "forward3");
     m_autoChooser.addOption("Drive reverse 3 Meters", "reverse3");
     m_autoChooser.addOption("Turn right 90 Degrees", "turnRight");
