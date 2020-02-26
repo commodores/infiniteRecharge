@@ -8,7 +8,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
@@ -20,7 +19,6 @@ import frc.robot.Constants.ArmConstants;
 public class Arm extends SubsystemBase {
 
   private final TalonSRX armMotor;
-  private final double feedFwdTerm = .00001;
   private int initPosition;
 
   public Arm() {
@@ -37,11 +35,7 @@ public class Arm extends SubsystemBase {
     armMotor.setNeutralMode(NeutralMode.Brake);
 
     armMotor.configAllowableClosedloopError(0, 25, 300);
-        
-    //int absolutePosition = armMotor.getSensorCollection().getPulseWidthPosition();
-    //absolutePosition &= 0xFFF;
-    //armMotor.setSelectedSensorPosition(absolutePosition);
-
+   
     armMotor.selectProfileSlot(0, 0);
     armMotor.config_kF(0, .0, 10);
     armMotor.config_kP(0, .2, 10);

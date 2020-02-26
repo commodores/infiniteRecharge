@@ -1,53 +1,47 @@
 package frc.robot.commands;
 
-import frc.robot.subsystems.LimeLight;
-import frc.robot.subsystems.Turret;
+import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  * An example command that uses an example subsystem.
  */
 public class AimTurret extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Turret m_turret;
-  private final LimeLight m_limelight;
   
-
-  public AimTurret(Turret turret, LimeLight limelight) {
-    this.m_turret = turret;
-    this.m_limelight = limelight;
+  public AimTurret() {
+    addRequirements(RobotContainer.m_turret);
+    addRequirements(RobotContainer.m_limelight);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_limelight.setPipeline(0);
-    m_limelight.setLedMode(2);
+    RobotContainer.m_limelight.setPipeline(0);
+    RobotContainer.m_limelight.setLedMode(2);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_limelight.setPipeline(0);
-    if(m_limelight.getX()>=3){
-      m_turret.turnTurret(-.25);
+    if(RobotContainer.m_limelight.getX()>=3){
+      RobotContainer.m_turret.turnTurret(-.35);
     }
-    if(m_limelight.getX()<=-3){
-      m_turret.turnTurret(.25);
+    if(RobotContainer.m_limelight.getX()<=-3){
+      RobotContainer.m_turret.turnTurret(.35);
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_turret.turnTurret(0);
-    m_limelight.setLedMode(0);
+    RobotContainer.m_turret.turnTurret(0);
+    RobotContainer.m_limelight.setLedMode(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(m_limelight.getX()<=1 && m_limelight.getX()>=-1){
+    if(RobotContainer.m_limelight.getX()<=1 && RobotContainer.m_limelight.getX()>=-1){
       return true;
     }
     return false;

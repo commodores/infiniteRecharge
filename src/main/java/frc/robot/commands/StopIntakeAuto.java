@@ -8,14 +8,12 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.RobotContainer;
 
 public class StopIntakeAuto extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Intake m_intake;
-
-  public StopIntakeAuto(Intake intake) {
-    this.m_intake = intake;
+  
+  public StopIntakeAuto() {
+    addRequirements(RobotContainer.m_intake);
   }
 
   // Called when the command is initially scheduled.
@@ -26,7 +24,7 @@ public class StopIntakeAuto extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intake.stopIntake();
+    RobotContainer.m_intake.stopIntake();
   }
 
   // Called once the command ends or is interrupted.

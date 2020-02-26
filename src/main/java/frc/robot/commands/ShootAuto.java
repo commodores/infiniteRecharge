@@ -8,16 +8,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.VelocityShooter;
+import frc.robot.RobotContainer;
 
 public class ShootAuto extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final VelocityShooter m_shooter;
-
   private int speed;
 
-  public ShootAuto(VelocityShooter shooter, int getSpeed) {
-    this.m_shooter = shooter;
+  public ShootAuto(int getSpeed) {
+    addRequirements(RobotContainer.m_shooter);
     speed = getSpeed;
   }
 
@@ -29,7 +26,7 @@ public class ShootAuto extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooter.shoot(speed);
+    RobotContainer.m_shooter.shoot(speed);
   }
 
   // Called once the command ends or is interrupted.

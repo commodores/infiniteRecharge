@@ -8,14 +8,12 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Arm;
+import frc.robot.RobotContainer;
 
 public class IntakeDownAuto extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Arm m_arm;
-
-  public IntakeDownAuto(Arm arm) {
-    this.m_arm = arm;
+  
+  public IntakeDownAuto() {
+    addRequirements(RobotContainer.m_arm);
   }
 
   // Called when the command is initially scheduled.
@@ -26,7 +24,7 @@ public class IntakeDownAuto extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_arm.armDown();
+    RobotContainer.m_arm.armDown();
   }
 
   // Called once the command ends or is interrupted.

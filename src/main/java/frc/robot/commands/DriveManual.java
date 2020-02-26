@@ -42,7 +42,7 @@ public class DriveManual extends CommandBase {
       rotation = 0;
     }
     
-    m_drivetrain.curvatureDrive(-speed, rotation, quickTurn);
+    m_drivetrain.curvatureDrive(-speed*.7, rotation*.7, quickTurn);
 
     //m_drivetrain.tankDrive(RobotContainer.m_driverController.getRawAxis(1), RobotContainer.m_driverController.getRawAxis(5));
   }

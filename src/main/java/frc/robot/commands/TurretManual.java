@@ -40,7 +40,7 @@ public class TurretManual extends CommandBase {
       speed = 0;
     }
 
-    m_turret.turnTurret(speed);
+    m_turret.turnTurret(speed*.5);
 
   }
 

@@ -49,8 +49,8 @@ public class DriveTrain extends SubsystemBase {
     leftSlave0.follow(leftMaster);
     rightSlave0.follow(rightMaster);
 
-    rightMaster.setOpenLoopRampRate(.5);
-    leftMaster.setOpenLoopRampRate(.5);
+    rightMaster.setOpenLoopRampRate(1.0);
+    leftMaster.setOpenLoopRampRate(1.0);
 
     leftEncoder.setPosition(0);
     rightEncoder.setPosition(0);

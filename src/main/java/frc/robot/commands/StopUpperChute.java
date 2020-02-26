@@ -8,14 +8,12 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.UpperChute;
+import frc.robot.RobotContainer;
 
 public class StopUpperChute extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final UpperChute m_UpperChute;
-
-  public StopUpperChute(UpperChute upperChute) {
-    this.m_UpperChute = upperChute;
+  
+  public StopUpperChute() {
+    addRequirements(RobotContainer.m_upperChute);
   }
 
   // Called when the command is initially scheduled.
@@ -26,7 +24,7 @@ public class StopUpperChute extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_UpperChute.StopChute();
+    RobotContainer.m_upperChute.StopChute();
   }
 
   // Called once the command ends or is interrupted.

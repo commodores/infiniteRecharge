@@ -15,6 +15,7 @@ import frc.robot.commands.AimTurret;
 import frc.robot.commands.AutoDrive;
 import frc.robot.commands.AutoTurn;
 import frc.robot.commands.ShootAuto;
+import frc.robot.commands.SimpleShoot;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
@@ -30,15 +31,15 @@ import frc.robot.subsystems.VelocityShooter;
 public class RobotContainer {
   public static final DriveTrain m_drivetrain = new DriveTrain();
   public static final Arm m_arm = new Arm();
-  private final Turret m_turret = new Turret();
-  private final Intake m_intake = new Intake();
+  public static final Turret m_turret = new Turret();
+  public static Intake m_intake = new Intake();
   //private final Shooter m_shooter = new Shooter();
-  private final VelocityShooter m_shooter = new VelocityShooter();
-  private final UpperChute m_upperChute = new UpperChute();
-  private final LowerChute m_lowerChute = new LowerChute();
-  private final LeftElevator m_leftElevator = new LeftElevator();
-  private final RightElevator m_rightElevator = new RightElevator();
-  private final LimeLight m_limelight = new LimeLight();
+  public static VelocityShooter m_shooter = new VelocityShooter();
+  public static UpperChute m_upperChute = new UpperChute();
+  public static LowerChute m_lowerChute = new LowerChute();
+  public static LeftElevator m_leftElevator = new LeftElevator();
+  public static RightElevator m_rightElevator = new RightElevator();
+  public static LimeLight m_limelight = new LimeLight();
   
   public static final XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
   public static final Joystick leftJoystick = new Joystick(OIConstants.kLeftJoystickPort);
@@ -147,8 +148,8 @@ public class RobotContainer {
   private void initializeAutoChooser()
   {
     /* Add options (which autonomous commands can be selected) to chooser. */
-    m_autoChooser.setDefaultOption("Choot 'em'", "shoot");
-    m_autoChooser.setDefaultOption("Drive foward 3 Meters", "forward3");
+    m_autoChooser.setDefaultOption("Just Choot 'em'", "simpleShoot");
+    m_autoChooser.addOption("Drive foward 3 Meters", "forward3");
     m_autoChooser.addOption("Drive reverse 3 Meters", "reverse3");
     m_autoChooser.addOption("Turn right 90 Degrees", "turnRight");
     m_autoChooser.addOption("Turn left 90 Degrees", "turnLeft");
@@ -166,6 +167,8 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     switch (m_autoChooser.getSelected())
     {
+      case "simpleShoot":
+        return new SimpleShoot();
       case "forward3":
         return new AutoDrive(3)
         .withTimeout(5);
