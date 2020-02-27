@@ -16,18 +16,18 @@ public class AimTurret extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.m_limelight.setPipeline(0);
-    RobotContainer.m_limelight.setLedMode(2);
+    //RobotContainer.m_limelight.setPipeline(0);
+    //RobotContainer.m_limelight.setLedMode(2);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if(RobotContainer.m_limelight.getX()>=3){
-      RobotContainer.m_turret.turnTurret(-.35);
+      RobotContainer.m_turret.turnTurret(-.2);
     }
     if(RobotContainer.m_limelight.getX()<=-3){
-      RobotContainer.m_turret.turnTurret(.35);
+      RobotContainer.m_turret.turnTurret(.2);
     }
   }
 
@@ -35,13 +35,13 @@ public class AimTurret extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     RobotContainer.m_turret.turnTurret(0);
-    RobotContainer.m_limelight.setLedMode(0);
+    //RobotContainer.m_limelight.setLedMode(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(RobotContainer.m_limelight.getX()<=1 && RobotContainer.m_limelight.getX()>=-1){
+    if(RobotContainer.m_limelight.getX()<=2 && RobotContainer.m_limelight.getX()>=-2){
       return true;
     }
     return false;

@@ -9,13 +9,12 @@ import static edu.wpi.first.wpilibj.XboxController.Button;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.AimTurret;
 import frc.robot.commands.AutoDrive;
 import frc.robot.commands.AutoTurn;
-import frc.robot.commands.ShootAuto;
 import frc.robot.commands.SimpleShoot;
+import frc.robot.commands.SixBallAuto;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
@@ -79,15 +78,15 @@ public class RobotContainer {
       .whenReleased(() -> m_shooter.stopShooter());
 
     new JoystickButton(m_driverController, Button.kX.value)
-      .whenPressed(() -> m_shooter.shoot(4600))
+      .whenPressed(() -> m_shooter.shoot(3750))
       .whenReleased(() -> m_shooter.stopShooter());
       
     new JoystickButton(m_driverController, Button.kY.value)
-      .whenPressed(() -> m_shooter.shoot(3750))
+      .whenPressed(() -> m_shooter.shoot(4600))
       .whenReleased(() -> m_shooter.stopShooter());
 
     new JoystickButton(rightJoystick, 1)
-      .whenPressed(new AimTurret(m_turret, m_limelight));
+      .whenPressed(new AimTurret());
 /*
     new JoystickButton(m_driverController, Button.kBumperRight.value)
       .whenPressed(() -> m_shooter.set(.90))
@@ -113,19 +112,19 @@ public class RobotContainer {
       .whenPressed(() -> m_upperChute.ChuteDown())
       .whenReleased(() -> m_upperChute.StopChute());
 
-    new JoystickButton(rightJoystick, 8)
+    new JoystickButton(rightJoystick, 9)
       .whenPressed(() -> m_intake.BallOut())
       .whenReleased(() -> m_intake.stopIntake()); 
 
-    new JoystickButton(rightJoystick, 7)
+    new JoystickButton(rightJoystick, 8)
         .whenPressed(() -> m_intake.BallIn())
         .whenReleased(() -> m_intake.stopIntake());
     
-    new JoystickButton(rightJoystick, 4)
+    new JoystickButton(m_driverController, Button.kBack.value)
       .whenPressed(() -> m_arm.armUp());
       //.whenReleased(() -> m_arm.armStop());
 
-    new JoystickButton(rightJoystick, 9)
+    new JoystickButton(m_driverController, Button.kStart.value)
     .whenPressed(() -> m_arm.armDown());
     //.whenReleased(() -> m_arm.armStop());
     
@@ -149,10 +148,9 @@ public class RobotContainer {
   {
     /* Add options (which autonomous commands can be selected) to chooser. */
     m_autoChooser.setDefaultOption("Just Choot 'em'", "simpleShoot");
-    m_autoChooser.addOption("Drive foward 3 Meters", "forward3");
-    m_autoChooser.addOption("Drive reverse 3 Meters", "reverse3");
-    m_autoChooser.addOption("Turn right 90 Degrees", "turnRight");
-    m_autoChooser.addOption("Turn left 90 Degrees", "turnLeft");
+    m_autoChooser.addOption("Drive forward off line", "forward1");
+    m_autoChooser.addOption("Drive reverse off line", "reverse1");
+    m_autoChooser.addOption("6 Balls is nuts!!!", "sixBall");
     //m_autoChooser.addOption("Three Ball", "threeBall");
     //m_autoChooser.addOption("Six Ball", "sixBall");
 
@@ -169,18 +167,14 @@ public class RobotContainer {
     {
       case "simpleShoot":
         return new SimpleShoot();
-      case "forward3":
-        return new AutoDrive(3)
+      case "forward1":
+        return new AutoDrive(-1,.5)
         .withTimeout(5);
-      case "reverse3":
-        return new AutoDrive(-3)
+      case "reverse1":
+        return new AutoDrive(1,.5)
         .withTimeout(5);
-      case "turnRight":
-        return new AutoTurn(90)
-        .withTimeout(5);
-      case "turnLeft":
-        return new AutoTurn(-90)
-        .withTimeout(5);
+      case "sixBall":
+        return new SixBallAuto();
       default:
         System.out.println("\nError selecting autonomous command:\nCommand selected: " + m_autoChooser.getSelected() + "\n");
         return null;

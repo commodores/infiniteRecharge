@@ -37,9 +37,9 @@ public class Arm extends SubsystemBase {
     armMotor.configAllowableClosedloopError(0, 25, 300);
    
     armMotor.selectProfileSlot(0, 0);
-    armMotor.config_kF(0, .0, 10);
-    armMotor.config_kP(0, .2, 10);
-    armMotor.config_kI(0, 0.00015, 10);
+    armMotor.config_kF(0, .5, 10);
+    armMotor.config_kP(0, .5, 10);
+    armMotor.config_kI(0, 0.0001, 10);
     armMotor.config_kD(0, 0, 10);
 
     armMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 0);
@@ -62,16 +62,15 @@ public class Arm extends SubsystemBase {
   }
 
   public void motionMagic(double pos){
-    //armMotor.set(ControlMode.MotionMagic, pos, DemandType.ArbitraryFeedForward, feedFwdTerm);
     armMotor.set(ControlMode.MotionMagic, pos);
   }
 
   public void armUp(){
-    armMotor.set(ControlMode.MotionMagic, initPosition);
+    armMotor.set(ControlMode.MotionMagic, initPosition - 500);
   }
 
   public void armDown(){
-    armMotor.set(ControlMode.MotionMagic, initPosition - 3900);
+    armMotor.set(ControlMode.MotionMagic, initPosition - 3700);
   }
 
   public void armManual(double speed){
