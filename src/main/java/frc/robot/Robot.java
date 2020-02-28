@@ -103,6 +103,10 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    RobotContainer.m_intake.stopIntake();
+    RobotContainer.m_upperChute.StopChute();
+    RobotContainer.m_lowerChute.StopChute();
+    RobotContainer.m_shooter.stopShooter();
   }
 
   /**
