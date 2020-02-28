@@ -25,7 +25,7 @@ public class UpperChute extends SubsystemBase {
   }
 
   public void ChuteDown(){
-    upperChuteMotor.set(ControlMode.PercentOutput, -.25);
+    upperChuteMotor.set(ControlMode.PercentOutput, -.35);
   }
 
   public void StopChute(){
