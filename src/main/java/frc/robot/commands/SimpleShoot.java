@@ -21,8 +21,8 @@ public class SimpleShoot extends SequentialCommandGroup {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
-      new AimTurret(),
-      new ShootAuto(4000).withTimeout(2),
+      //new AimTurret(),
+      new ShootAuto(4000).withTimeout(5),
       new ParallelCommandGroup(
         new ShootAuto(4000),
         new UpperChuteAuto(),
