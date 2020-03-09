@@ -23,11 +23,30 @@ public class AimTurret extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(RobotContainer.m_limelight.getX()>=3){
-      RobotContainer.m_turret.turnTurret(-.2);
-    }
-    if(RobotContainer.m_limelight.getX()<=-3){
-      RobotContainer.m_turret.turnTurret(.2);
+    if(RobotContainer.m_limelight.seesTarget()){
+      if(RobotContainer.m_limelight.getX()>=5){
+        RobotContainer.m_turret.turnTurret(-.3);
+      }
+      else if(RobotContainer.m_limelight.getX()>=3){
+        RobotContainer.m_turret.turnTurret(-.2);
+      }
+      else if(RobotContainer.m_limelight.getX()>=1){
+        RobotContainer.m_turret.turnTurret(-.1);
+      }
+      else if(RobotContainer.m_limelight.getX()<=-5){
+        RobotContainer.m_turret.turnTurret(.3);
+      }
+      else if(RobotContainer.m_limelight.getX()<=-3){
+        RobotContainer.m_turret.turnTurret(.2);
+      }
+      else if(RobotContainer.m_limelight.getX()<=-1){
+        RobotContainer.m_turret.turnTurret(.1);
+      }
+      else {
+        RobotContainer.m_turret.turnTurret(0);
+      }
+    } else {
+      RobotContainer.m_turret.turnTurret(0);
     }
   }
 
@@ -41,9 +60,9 @@ public class AimTurret extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(RobotContainer.m_limelight.getX()<=2 && RobotContainer.m_limelight.getX()>=-2){
-      return true;
-    }
+    //if(RobotContainer.m_limelight.getX()<=2 && RobotContainer.m_limelight.getX()>=-2){
+    //  return true;
+    //}
     return false;
 
 

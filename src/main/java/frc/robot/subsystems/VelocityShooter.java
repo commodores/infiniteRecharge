@@ -35,7 +35,7 @@ public class VelocityShooter extends SubsystemBase {
    * proportional path against the differential and integral paths is controlled
    * by this value.
    */
-  private final double kP = 6e-5;
+  private final double kP = .00065;
   /**
    * The Integral Gain of the SparkMAX PIDF controller The weight of the integral
    * path against the proportional and differential paths is controlled by this
@@ -57,7 +57,7 @@ public class VelocityShooter extends SubsystemBase {
    * The Feed-Forward Gain of the SparkMAX PIDF controller. The weight of the
    * feed-forward loop as compared to the PID loop is controlled by this value.
    */
-  private final double kFF = 0.000182;
+  private final double kFF = 0.000177;
   /**
    * Scales the output of the SparkMAX PIDF controller.
    */

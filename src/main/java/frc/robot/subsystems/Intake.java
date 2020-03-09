@@ -22,11 +22,11 @@ public class Intake extends SubsystemBase {
   }
   
   public void BallIn(){
-    intakeMotor.set(ControlMode.PercentOutput, .4);
+    intakeMotor.set(ControlMode.PercentOutput, -1);
   }
   
   public void BallOut(){
-    intakeMotor.set(ControlMode.PercentOutput, -.35);
+    intakeMotor.set(ControlMode.PercentOutput, .6);
   }
   
   public void stopIntake(){

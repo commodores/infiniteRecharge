@@ -34,16 +34,17 @@ public class LimeLight extends SubsystemBase {
      v = tv.getDouble(0.0);
      area = ta.getDouble(0.0);
      s = ts.getDouble(0.0);
-    postToDashboard();
+    //postToDashboard();
   }
 
+  
   public void postToDashboard(){
     SmartDashboard.putNumber("LimelightX", x);
-    SmartDashboard.putNumber("LimelightY", y);
-    SmartDashboard.putNumber("LimelightV", v);
-    SmartDashboard.putNumber("LimelightArea", area);
-    SmartDashboard.putNumber("LimelightSkew", s);
-    SmartDashboard.putNumber("LEDMODE", (int)table.getEntry("ledMode").getDouble(0.0));
+    //SmartDashboard.putNumber("LimelightY", y);
+    //SmartDashboard.putNumber("LimelightV", v);
+    //SmartDashboard.putNumber("LimelightArea", area);
+    //SmartDashboard.putNumber("LimelightSkew", s);
+    //SmartDashboard.putNumber("LEDMODE", (int)table.getEntry("ledMode").getDouble(0.0));
   }
   
   public boolean isAimed(){

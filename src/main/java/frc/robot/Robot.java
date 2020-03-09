@@ -61,6 +61,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Right Encoder", m_robotContainer.m_drivetrain.getRightEncoder());
     SmartDashboard.putNumber("Arm Encoder", m_robotContainer.m_arm.getArmPostion());
     SmartDashboard.putNumber("Arm Initial Position", m_robotContainer.m_arm.getInitPosition());
+    RobotContainer.m_limelight.postToDashboard();
   }
 
   /**

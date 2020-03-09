@@ -21,7 +21,7 @@ public class SixBallAuto extends SequentialCommandGroup {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
-      new AimTurret(),
+      //new AimTurret(),
       new ShootAuto(4000).withTimeout(1.25),
       new ParallelCommandGroup(
         new ShootAuto(4000),
@@ -37,7 +37,7 @@ public class SixBallAuto extends SequentialCommandGroup {
         new IntakeInAuto(),
         new LowerChuteAuto()).withTimeout(6),
       new StopIntakeAuto().withTimeout(.1),
-      new AimTurret(),
+      //new AimTurret(),
       new ParallelCommandGroup(
         new UpperChuteReverseAuto(),
         new LowerChuteReverseAuto()).withTimeout(.25),

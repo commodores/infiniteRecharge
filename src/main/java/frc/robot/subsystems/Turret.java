@@ -14,6 +14,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.TurretConstants;
+import frc.robot.commands.AimTurret;
 import frc.robot.commands.TurretManual;
 
 public class Turret extends SubsystemBase {
@@ -30,7 +31,7 @@ public class Turret extends SubsystemBase {
     turretMotor.setNeutralMode(NeutralMode.Brake);
     turretMotor.set(ControlMode.PercentOutput, 0.0);
 
-    setDefaultCommand(new TurretManual(this));
+    //setDefaultCommand(new TurretManual(this));
   }
 
 

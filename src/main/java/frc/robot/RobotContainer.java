@@ -9,6 +9,7 @@ import static edu.wpi.first.wpilibj.XboxController.Button;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.AimTurret;
 import frc.robot.commands.AutoDrive;
@@ -74,7 +75,7 @@ public class RobotContainer {
 
 //Test these
     new JoystickButton(m_driverController, Button.kBumperRight.value)
-      .whenPressed(() -> m_shooter.shoot(5400))
+      .whenPressed(() -> m_shooter.shoot(5350))
       .whenReleased(() -> m_shooter.stopShooter());
 
     new JoystickButton(m_driverController, Button.kX.value)
@@ -85,8 +86,8 @@ public class RobotContainer {
       .whenPressed(() -> m_shooter.shoot(4600))
       .whenReleased(() -> m_shooter.stopShooter());
 
-    new JoystickButton(rightJoystick, 1)
-      .whenPressed(new AimTurret());
+    //new JoystickButton(rightJoystick, 1)
+    //  .whenPressed(new AimTurret(Turret));
 /*
     new JoystickButton(m_driverController, Button.kBumperRight.value)
       .whenPressed(() -> m_shooter.set(.90))
@@ -137,6 +138,9 @@ public class RobotContainer {
   {
     /* Turn off Limelight LED when first started up so it doesn't blind drive team. */
     m_limelight.setLedMode(0);
+
+    m_turret.setDefaultCommand(
+      new AimTurret());
   }
   /**
    * Set options for autonomous command chooser and display them for selection on the SmartDashboard.
