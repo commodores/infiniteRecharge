@@ -122,12 +122,14 @@ public class RobotContainer {
         .whenReleased(() -> m_intake.stopIntake());
     
     new JoystickButton(m_driverController, Button.kBack.value)
-      .whenPressed(() -> m_arm.armUp());
-      //.whenReleased(() -> m_arm.armStop());
+      //.whenPressed(() -> m_arm.armUp());
+      .whenPressed(() -> m_arm.armManual(-.3))
+      .whenReleased(() -> m_arm.armStop());
 
     new JoystickButton(m_driverController, Button.kStart.value)
-    .whenPressed(() -> m_arm.armDown());
-    //.whenReleased(() -> m_arm.armStop());
+    //.whenPressed(() -> m_arm.armDown());
+    .whenPressed(() -> m_arm.armManual(.3))
+    .whenReleased(() -> m_arm.armStop());
     
   }
   /**
